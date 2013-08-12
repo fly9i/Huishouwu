@@ -60,7 +60,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
 			value="jdbc:mysql://rosegun.com:3306/zjw_user_center?useUnicode=true&amp;characterEncoding=utf-8" />
-		<property name="username" value="zhujiwu911" />
-		<property name="password" value="zhujiwu912" />
+		<property name="username" value="hsw0911" />
+		<property name="password" value="hsw0912" />
 	</bean>
 </beans>

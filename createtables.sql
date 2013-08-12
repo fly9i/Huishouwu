@@ -1,0 +1,1 @@
+create table Users (id int(11) not null primary key auto_increment, name varchar(64), pass varchar(128), email varchar(256), sign_way varchar(16), mobile varchar(32), role int(11), address varchar(128), create_at date, update_at date, last_login date);

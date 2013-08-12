@@ -10,7 +10,7 @@ package com.huishouwu.util;
  */
 public class CustomerContextHolder {
 	
-	public static final String TESTMYSQLDATASOURCE = "mysqlDataSource";
+	public static final String MYSQLDATASOURCE = "mysqlDataSource";
 
 	private static final ThreadLocal<String> contextHolder = new ThreadLocal<String>();
 
