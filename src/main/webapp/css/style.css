@@ -18,7 +18,7 @@
   left: 0px;
   top: 0px;
   background-color: #000000;
-  filter: "alpha(opacity= (@op*100)";
+  filter: alpha(opacity= 70);
   -moz-opacity: 0.7;
   opacity: 0.7;
   z-index: 65536;
@@ -31,7 +31,9 @@
   height: 400px;
   left: 50%;
   margin-left: -250px;
-  top: 50%;
-  margin-top: -200px;
+  top: 50px;
   padding: 10px;
+}
+label.error {
+  color: red;
 }

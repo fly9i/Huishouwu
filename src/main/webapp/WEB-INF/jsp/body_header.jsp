@@ -8,30 +8,29 @@
 			style="position: absolute; border: 0px; right: 20px; top: 20px; width: 25px; height: 25px; cursor: pointer;"
 			id="close" />
 	</div>
-	<%@ include file="body_header_reg.jsp" %>
+	<%@ include file="body_header_reg.jsp"%>
 	<div id="main" class="container">
-	<div id="top" class="navbar">
-	<div class="navbar-inner">
-		<div class="container">
-			<a class="brand" href="#">回收DEMO</a>
-			<ul class="nav pull-right">
-				<li class="dropdown"><a class="dropdown-toggle" role="button"
-					data-toggle="dropdown" href="#"> 登陆<b class="caret"></b>
-				</a>
-
-					<div class="dropdown-menu dropdown-div" role="menu">
-						<form>
-							<input type="text" class="input-medium" placeholder="用户名" /> <input
-								type="password" class="input-medium" placeholder="密码" />
-							<button type="submit" class="btn btn-primary pull-right">提交</button>
-						</form>
-					</div></li>
-				<li><a id="reg" class="dropdown-toggle" data-toggle="dropdown"
-					href="#">注册</a></li>
-			</ul>
+		<div id="top" class="navbar">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="#">回收DEMO</a>
+					<ul class="nav pull-right">
+						<li>
+							<form id="form_login" class="navbar-form">
+								<input id="login_name" name="login_name" type="text"
+									class="span2" placeholder="用户名/邮箱/手机" /> <input
+									id="login_password" name="login_password" type="password"
+									class="span2" placeholder="密码" /> <input type="button"
+									id="login_btn" value="登录" class="btn" />
+							</form>
+						</li>
+						<li>&nbsp; <input type="button" id="reg" class="btn"
+							value="注册" href="#">
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
 		<div class="row">
 			<div class="span12">
 				<ul id="nav-bar" class="nav nav-tabs" style="margin-bottom: 0px;">

@@ -8,16 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.huishouwu.dao.TestDao;
+import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.User;
 
 @Controller
 public class MainController {
 	
-	private TestDao testDao;
-	@Resource(name="testDao")
-	public void setMainDAO(TestDao testDao) {
-		this.testDao = testDao;
+	private UserDao userDao;
+	@Resource(name="userDao")
+	public void setMainDAO(UserDao userDao) {
+		this.userDao = userDao;
 	}
 	
 	
@@ -40,7 +40,7 @@ public class MainController {
 	@RequestMapping("news")
 	public String news(Model m) {
 		m.addAttribute("title", "新闻");
-		List<User> users=testDao.queryUsers();
+		List<User> users=userDao.getUsers();
 		for (User u:users){
 			System.out.println(u.getEmail());
 		}

@@ -10,6 +10,7 @@ public class User {
 	private String sing_way;
 	private String mobile;
 	private int role;
+	private String address;
 	private Date create_at;
 	private Date update_at;
 	private Date last_login;
@@ -66,6 +67,12 @@ public class User {
 	}
 	public void setLast_login(Date last_login) {
 		this.last_login = last_login;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 }
