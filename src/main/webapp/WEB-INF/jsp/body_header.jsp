@@ -13,7 +13,9 @@
 		<div id="top" class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#">回收DEMO</a>
+					<a class="brand" href="home">
+						回收屋--为您生活添色彩
+					</a>
 					<ul class="nav pull-right">
 						<li>
 							<form id="form_login" class="navbar-form">

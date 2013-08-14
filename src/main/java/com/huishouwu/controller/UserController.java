@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import org.apache.catalina.util.MD5Encoder;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +33,7 @@ public class UserController {
 			@RequestParam("email") String email,
 			@RequestParam("mobile") String mobile,
 			@RequestParam("password1") String pass) {
+		
 		User user = new User();
 		user.setName(name);
 		user.setEmail(email);
