@@ -40,7 +40,7 @@ $(document).ready(function() {
 	});
 
 	$("#login_btn").on("click", function() {
-		$(this).addClass("disabled");
+		$(this).button("loading");
 		$.ajax({
 			url : "./user/login",
 			data : $("#form_login").serialize(),
@@ -48,8 +48,8 @@ $(document).ready(function() {
 			async : true,
 			success : (function(btn) {
 				return function(res) {
-					btn.removeClass("disabled");
-					alert(res.result);
+					btn.button("reset");
+					alert(res);
 				};
 			})($(this))
 		});

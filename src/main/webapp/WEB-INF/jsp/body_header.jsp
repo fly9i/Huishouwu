@@ -13,18 +13,21 @@
 		<div id="top" class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="home">
-						回收屋--为您生活添色彩
-					</a>
+					<a class="brand" href="home"> 回收屋--为您生活添色彩 </a>
 					<ul class="nav pull-right">
+					<li>
+					${request.getSession().getAttribute("user").getName() }
+					</li>
 						<li>
-							<form id="form_login" class="navbar-form">
-								<input id="login_name" name="login_name" type="text"
-									class="span2" placeholder="用户名/邮箱/手机" /> <input
-									id="login_password" name="login_password" type="password"
-									class="span2" placeholder="密码" /> <input type="button"
-									id="login_btn" value="登录" class="btn" />
-							</form>
+							
+								<form id="form_login" class="navbar-form">
+									<input id="login_name" name="login_name" type="text"
+										class="span2" placeholder="用户名/邮箱/手机" /> <input
+										id="login_password" name="login_password" type="password"
+										class="span2" placeholder="密码" /> <input type="button"
+										id="login_btn" value="登录" class="btn"  data-loading-text="登录中..." />
+								</form>
+
 						</li>
 						<li>&nbsp; <input type="button" id="reg" class="btn"
 							value="注册" href="#">
