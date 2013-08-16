@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.User;
 
 @Controller
+@RequestMapping("user")
 public class UserController {
 	
 	public static final Logger logger = LoggerFactory
@@ -32,30 +34,17 @@ public class UserController {
 		this.userDao = userDao;
 	}
 	
-	@RequestMapping("user/login")
+	@RequestMapping("/login")
 	@ResponseBody
-	@ModelAttribute
 	public String userLogin(HttpServletRequest req){
-		try {
-			req.setCharacterEncoding("utf8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		User u=new User();
 		u.setName("测试用户");
 		req.getSession().setAttribute("user", u);
 		System.out.println("dengluchenggong");
-		return "test";
+		return "登陆成功！";
 	}
 
-	@RequestMapping("user/add")
+	@RequestMapping("/add")
 	@ResponseBody
 	@ModelAttribute
 	public String addUser(@RequestParam("username") String name,
