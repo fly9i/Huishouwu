@@ -53,3 +53,9 @@ label.error {
 a,img {
 	border: 0;
 }
+.sale-nav{
+	height:100%;
+}
+.sale-nav-inner{
+	width:150px;
+}

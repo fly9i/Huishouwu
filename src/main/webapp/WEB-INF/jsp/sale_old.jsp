@@ -13,8 +13,8 @@
 <div class="sale_container span12" style="height: 1000px;">
 
 	<div id="sale_list" class="tabbable tabs-left" style="height: 1000px;">
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="#" fordiv="bx"> <img
+		<ul class="nav nav-tabs sale-nav">
+			<li class="active sale-nav-inner"><a href="#" fordiv="bx"> <img
 					style="height: 20px;" src="img/bx.jpg" />&nbsp;&nbsp;冰箱
 			</a></li>
 			<li><a href="#" fordiv="xyj"> <img style="height: 20px;"
@@ -32,7 +32,7 @@
 				<li id="bx" class="content_show">
 					<form id="form_bx" class="well form-horizontal">
 						<fieldset>
-							<legend>冰箱</legend>
+							<legend><img style="height: 30px;" src="img/bx.jpg"/>&nbsp;冰箱</legend>
 							<div class="control-group">
 								<label class="control-label" for="rl">容量</label>
 								<div class="controls">
@@ -50,6 +50,12 @@
 									<input type="radio"/>
 								</div>
 							</div>
+							<div class="control-group">
+								<input type="button" value="添加冰箱" addto="bx" class="btn controls add" />
+								<input type="button" value="添加洗衣机" addto="xyj" class="btn controls add" />
+								<input type="button" value="添加电脑" addto="dn" class="btn controls add" />
+							</div>
+							
 						</fieldset>
 					</form>
 				</li>

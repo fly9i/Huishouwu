@@ -8,6 +8,7 @@
 
 	<!-- Enables controllers mapped with @RequestMapping annotations, formatting 
 		annotations @NumberFormat @DateTimeFormat, and JSR 303 style validation -->
+
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -21,16 +22,23 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
+	<mvc:interceptors>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/*" />
+			
+			<bean class="com.huishouwu.interceptor.SessionInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 	<mvc:resources mapping="/resources/**"
 		location="/, classpath:/META-INF/web-resources/" />
 	<mvc:default-servlet-handler />
 
 	<context:component-scan base-package="*" />
 
-	<!-- Map paths directly to view names without controller processing. Use 
-		the view-name attribute if necessary: by convention the view name equals 
-		the path without the leading slash -->
-	<mvc:view-controller path="/" view-name="index" />
+
+
 
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
@@ -44,7 +52,7 @@
 			<list>
 				<bean
 					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-					<property name="prefix" value="WEB-INF/jsp/" />
+					<property name="prefix" value="/WEB-INF/jsp/" />
 					<property name="suffix" value=".jsp" />
 				</bean>
 			</list>
@@ -70,7 +78,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://rosegun.com:3306/zjw_user_center?useUnicode=true&amp;characterEncoding=utf-8" />
+			value="jdbc:mysql://rosegun.com:3306/hsw_user_center?useUnicode=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="hsw0911" />
 		<property name="password" value="hsw0912" />
 	</bean>

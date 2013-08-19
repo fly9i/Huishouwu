@@ -40,10 +40,7 @@ public class MainController {
 	@RequestMapping("news")
 	public String news(Model m) {
 		m.addAttribute("title", "新闻");
-		List<User> users=userDao.getUsers();
-		for (User u:users){
-			System.out.println(u.getEmail());
-		}
+		
 		return "news";
 	} 
 }

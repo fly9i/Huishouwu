@@ -5,10 +5,30 @@ function YXM_valided_false() {
 	console.log("err validate");
 }
 
+$.fn.addMovie=function(){
+	this.on("click",function(e){
+		var addto=$(e.target).attr("addto");
+		var addtoNode="a[fordiv="+addto+"]";
+		var jpg=$(addtoNode).find("img").attr("src");
+		var img=$("<img/>").css({"z-index":999,border:0,position:'absolute',width:40,height:40,left:e.pageX,top:e.pageY}).attr("src",jpg);
+		$("body").append(img);
+		var target=$(addtoNode).offset();
+		img.animate({left:target.left,top:target.top},500,null,function(){
+			img.remove();
+			var cc=$(".count_"+addto);
+			if(cc.length){
+				cc.html(Number(cc.html())+1);
+			}else{
+				$(addtoNode).append($("<span class='badge badge-success count_"+addto+"'>1</span>"));
+			}
+		});
+		
+	});
+};
 
 
 $(document).ready(function() {
-
+	$(".add").addMovie();
 	$("#form_register").validate({
 		submitHandler : function() {
 			$.ajax({
@@ -17,11 +37,10 @@ $(document).ready(function() {
 				url : "./user/add",
 				data : $('#form_register').serialize(),
 				success : function(res) {
-					if (res == "ok") {
-						alert("注册成功");
-						close();
-					} else {
-						alert(res);
+					res=eval("("+res+")");
+					alert(res.message);
+					if (res.code == 200) {
+						window.location.reload();
 					}
 				}
 			});
@@ -38,6 +57,22 @@ $(document).ready(function() {
 		$("#cover").show();
 		$("#form_reg").show();
 	});
+	
+	$("#logout").on("click",function(){
+		$.ajax({
+			url:"user/logout",
+			async:true,
+			type:"GET",
+			success:function(res){
+				res=eval("("+res+")");
+				if(res.code==200){
+					window.location.reload();
+				}else{
+					alert(res.message);
+				}
+			}
+		});
+	});
 
 	$("#login_btn").on("click", function() {
 		$(this).button("loading");
@@ -49,13 +84,20 @@ $(document).ready(function() {
 			success : (function(btn) {
 				return function(res) {
 					btn.button("reset");
-					alert(res);
+					res=eval("("+res+")");
+					if(res.code==200){
+						window.location.reload();
+					}else{
+						alert(res.message);
+					}
 				};
 			})($(this))
 		});
 	});
 
 });
+
+
 
 $.fn.changeDiv = function() {
 	return this.each(function() {

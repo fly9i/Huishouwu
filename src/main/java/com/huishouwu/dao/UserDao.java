@@ -1,17 +1,21 @@
 package com.huishouwu.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.huishouwu.pojo.User;
@@ -46,18 +50,18 @@ public class UserDao {
 		return userList;
 	}
 
-	public int addUser(final User user){
-		
+	public int addUser(final User user) {
+
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql="insert into users " +
-				"(name,pass,email,sign_way,mobile,role,address,create_at,update_at,last_login) " +
-				"values " +
-				"(?,?,?,?,?,?,?,?,?,?)";
-		return this.jdbcTemplate.update(sql, new PreparedStatementSetter() {		
+		String sql = "insert into users "
+				+ "(name,pass,email,sign_way,mobile,role,address,create_at,update_at,last_login) "
+				+ "values " + "(?,?,?,?,?,?,?,?,?,?)";
+		return this.jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
 				// TODO Auto-generated method stub
 				ps.setObject(1, user.getName());
+
 				ps.setObject(2, user.getPass());
 				ps.setObject(3, user.getEmail());
 				ps.setObject(4, user.getSing_way());
@@ -69,6 +73,24 @@ public class UserDao {
 				ps.setObject(10, user.getLast_login());
 			}
 		});
+	}
+
+	public List<User> checkUser(final String name, final String pass) {
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "select * from users where pass=? and (name=? or email=? or mobile=?)";
+		return this.jdbcTemplate.query(new PreparedStatementCreator() {
+
+			@Override
+			public PreparedStatement createPreparedStatement(Connection arg0)
+					throws SQLException {
+				PreparedStatement ps = arg0.prepareStatement(sql);
+				ps.setObject(1, pass);
+				ps.setObject(2, name);
+				ps.setObject(3, name);
+				ps.setObject(4, name);
+				return ps;
+			}
+		}, new BeanPropertyRowMapper<User>(User.class));
 	}
 	// insert into users
 	// (name,pass,email,sign_way,mobile,role,address,create_at,update_at,last_login)
