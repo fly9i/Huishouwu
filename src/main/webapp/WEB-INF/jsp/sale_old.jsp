@@ -21,7 +21,7 @@
 					src="img/xyj.jpg" />&nbsp;&nbsp;洗衣机
 			</a></li>
 			<li><a href="#" fordiv="dn"> <img style="height: 20px;"
-					src="img/xsq.jpg" />&nbsp;&nbsp;电脑
+					src="img/dn.jpg" />&nbsp;&nbsp;电脑
 			</a></li>
 			<li><a href="#" fordiv="dsj"> <img style="height: 20px;"
 					src="img/ds.jpg" />&nbsp;&nbsp;电视机
@@ -30,34 +30,7 @@
 		<div class="tab-content">
 			<ul>
 				<li id="bx" class="content_show">
-					<form id="form_bx" class="well form-horizontal">
-						<fieldset>
-							<legend><img style="height: 30px;" src="img/bx.jpg"/>&nbsp;冰箱</legend>
-							<div class="control-group">
-								<label class="control-label" for="rl">容量</label>
-								<div class="controls">
-									<label class="radio inline">
-										 <input type="radio" name="rl">10L
-									</label>
-									<label class="radio inline">
-										 <input type="radio"  name="rl">20L
-									</label>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="xs">形式</label>
-								<div class="controls">
-									<input type="radio"/>
-								</div>
-							</div>
-							<div class="control-group">
-								<input type="button" value="添加冰箱" addto="bx" class="btn controls add" />
-								<input type="button" value="添加洗衣机" addto="xyj" class="btn controls add" />
-								<input type="button" value="添加电脑" addto="dn" class="btn controls add" />
-							</div>
-							
-						</fieldset>
-					</form>
+					<%@ include file="./huishou/bx.jsp" %>
 				</li>
 				
 				<li id="xyj">
@@ -67,11 +40,7 @@
 						</fieldset>
 					</form></li>
 				<li id="dn">
-					<form id="form_dn" class="well form-horizontal">
-						<fieldset>
-							<legend>电脑</legend>
-						</fieldset>
-					</form>
+					<%@ include file="./huishou/dn.jsp" %>
 				</li>
 				<li id="dsj">
 					<form id="form_dsj" class="well form-horizontal">
