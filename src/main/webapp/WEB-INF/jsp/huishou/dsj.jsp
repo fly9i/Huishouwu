@@ -8,8 +8,8 @@
 		<div class="control-group">
 			<label class="control-label">描述</label>
 			<div class="controls">
-				<label class="radio"><input type="radio" name="bx_desc" checked
-					value="150lt"/>150L以下 
+				<label class="radio"><input type="radio" name="dsj_desc" checked
+					value="old10lt"/>老式十寸以下 
 				</label> 
 				<label class="radio"> <input
 					type="radio" name="bx_desc" value="150-190"/>150L-190L(含)
