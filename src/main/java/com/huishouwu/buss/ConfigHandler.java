@@ -28,7 +28,7 @@ public class ConfigHandler {
 	
 	
 	@Cacheable(value="typeconfig",key="#id+'typeid'")
-	public List<TypeConfig> getTypeConfigBy(int id){
+	public List<TypeConfig> getTypeConfigById(int id){
 		return configDao.getTypeConfigById(id);
 	}
 	

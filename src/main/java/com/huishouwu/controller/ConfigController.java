@@ -28,6 +28,7 @@ public class ConfigController {
 	@RequestMapping("/{type}")
 	@ResponseBody
 	public Object getTypeConfig(@PathVariable String type){
-		return configHandler.getTypeConfig(1);
+//		return configHandler.getTypeConfig();
+		return null;
 	}
 }
