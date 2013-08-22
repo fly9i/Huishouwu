@@ -1,24 +1,19 @@
 package com.huishouwu.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.huishouwu.pojo.TypeConfig;
+import com.huishouwu.pojo.TypeConfigSimple;
 import com.huishouwu.util.CustomerContextHolder;
 
 @Repository
@@ -41,19 +36,13 @@ public class ConfigDao {
 		this.dynamicDataSource = dynamicDataSource;
 	}
 
-	public List<Integer> getAllTypeid(){
+	public List<TypeConfigSimple> getAllType(){
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql = "select distinct type  from hsw_buss.type_config";
-		return this.jdbcTemplate.query(sql, new RowMapper<Integer>(){
-
-			@Override
-			public Integer mapRow(ResultSet rs, int arg1) throws SQLException {
-				// TODO Auto-generated method stub
-				return rs.getInt("type");
-			}
-			
-		});
+		String sql = "select type,t_name as name,des  from hsw_buss.type_config";
+		return this.jdbcTemplate.query(sql,new BeanPropertyRowMapper(TypeConfigSimple.class));
 	}
+	
+	
 	
 	public List<TypeConfig> getTypeConfigById(int id) {
 		logger.debug("Start to query from database for type config.");

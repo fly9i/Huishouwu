@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.huishouwu.buss.ConfigHandler;
 import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.User;
 
@@ -19,7 +20,8 @@ public class MainController {
 	public void setMainDAO(UserDao userDao) {
 		this.userDao = userDao;
 	}
-	
+	@Resource
+	private ConfigHandler configHandler;
 	
 	@RequestMapping("home")
 	public String index(Model m) {

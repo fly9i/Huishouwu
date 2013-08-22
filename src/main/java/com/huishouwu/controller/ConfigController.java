@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,9 +25,9 @@ public class ConfigController {
 //	private ConfigDao configDao;
 	
 	
-	@RequestMapping("/type.json")
+	@RequestMapping("/{type}")
 	@ResponseBody
-	public Object getTypeConfig(){
-		return configHandler.getTypeConfigById(1);
+	public Object getTypeConfig(@PathVariable String type){
+		return configHandler.getTypeConfig(1);
 	}
 }

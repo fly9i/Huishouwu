@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.huishouwu.dao.ConfigDao;
 import com.huishouwu.pojo.TypeConfig;
+import com.huishouwu.pojo.TypeConfigSimple;
 
 @Service
 public class ConfigHandler {
@@ -27,7 +28,7 @@ public class ConfigHandler {
 	
 	
 	@Cacheable(value="typeconfig",key="#id+'typeid'")
-	public List<TypeConfig> getTypeConfigById(int id){
+	public List<TypeConfig> getTypeConfigBy(int id){
 		return configDao.getTypeConfigById(id);
 	}
 	
@@ -40,8 +41,8 @@ public class ConfigHandler {
 		logger.debug("Clear type config with key:"+id);
 	}
 
-	public List<Integer> getAllTypeid(){
-		return configDao.getAllTypeid();
+	public List<TypeConfigSimple> getAllType(){
+		return configDao.getAllType();
 	}
 	
 

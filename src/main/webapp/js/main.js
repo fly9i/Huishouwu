@@ -1,9 +1,4 @@
-function YXM_valided_true() { // 验证码输入正确后的操作
-	console.log("correct validate");
-}
-function YXM_valided_false() {
-	console.log("err validate");
-}
+
 
 $.fn.addMovie=function(){
 	this.on("click",function(e){

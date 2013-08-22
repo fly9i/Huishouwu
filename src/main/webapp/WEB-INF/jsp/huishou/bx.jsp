@@ -8,9 +8,11 @@
 		<div class="control-group">
 			<label class="control-label">描述</label>
 			<div class="controls">
+			
 				<label class="radio"><input type="radio" name="bx_desc" checked
 					value="150lt"/>150L以下 
 				</label> 
+				
 				<label class="radio"> <input
 					type="radio" name="bx_desc" value="150-190"/>150L-190L(含)
 				</label> 
@@ -21,6 +23,7 @@
 				</label> <label class="radio"> <input type="radio" name="bx_desc"
 					value="bg"/>冰柜
 				</label>
+				
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="count">数量</label>
