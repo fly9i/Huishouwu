@@ -31,6 +31,10 @@ public class ConfigHandler {
 	public List<TypeConfig> getTypeConfigById(int id){
 		return configDao.getTypeConfigById(id);
 	}
+	@Cacheable(value="typeconfigname",key="#name+'typename'")
+	public List<TypeConfig> getTypeConfigByName(String name){
+		return configDao.getTypeConfigByName(name);
+	}
 	
 	@CacheEvict(value="typeconfig",allEntries=true)
 	public void clearAllTypeConfig(){
@@ -40,6 +44,7 @@ public class ConfigHandler {
 	public void clearTypeConfig(int id){
 		logger.debug("Clear type config with key:"+id);
 	}
+	
 
 	public List<TypeConfigSimple> getAllType(){
 		return configDao.getAllType();

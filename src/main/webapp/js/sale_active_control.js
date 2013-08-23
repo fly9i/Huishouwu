@@ -10,18 +10,24 @@ $(document).ready(function() {
 	});
 });
 
-function getTypeConfig(id){
+function getTypeConfig(t_name){
 	var frag=$(document.createDocumentFragment());
 	$.ajax({
 		type : "GET",
 		async : true,
-		url : "./config/bx",
+		url : "./config/"+t_name,
 		success : function(res) {
-			res=eval("("+res+")");
-			alert(res.message);
-			if (res.code == 200) {
-				window.location.reload();
+			/*<label class="radio"><input type="radio" name="bx_desc" checked
+			value="150lt"/>150L以下 
+		</label> 
+		*/
+			for (var i in res){
+				var label=$("<label/>").addClass("radio");
+				var input = $("<input/>").attr({type:"radio",name:"bx_desc",checked:"true",value:res[i].f_id});
+				label.append(input).append(res[i].feature);
+				frag.append(label);
 			}
+			
 		}
 	});
 }
