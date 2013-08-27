@@ -1,35 +1,10 @@
 
 
-$.fn.addMovie=function(){
-	this.on("click",function(e){
-		
-		var addto=$(e.target).attr("addto");
-		var form=$("#form_"+addto)
-		var addtoNode="a[fordiv="+addto+"]";
-		var jpg=$(addtoNode).find("img").attr("src");
-		var img=$("<img/>").css({"z-index":999,border:0,position:'absolute',width:40,height:40,left:e.pageX,top:e.pageY}).attr("src",jpg);
-		$("body").append(img);
-		var target=$(addtoNode).offset();
-		img.animate({left:target.left,top:target.top-40},500,null,function(){
-			img.animate({top:target.top},500,null,function(){
-				img.remove();
-				var cc=$(".count_"+addto);
-				var addCount=form.find("input[name=count]").val();
-				if(cc.length){
-					cc.html(Number(cc.html())+Number(addCount));
-				}else{
-					$(addtoNode).append($("<span class='badge badge-success count_"+addto+"'>"+addCount+"</span>"));
-				}
-			});
-			
-		});
-		
-	});
-};
+
 
 
 $(document).ready(function() {
-	$(".add").addMovie();
+	
 	$("#form_register").validate({
 		submitHandler : function() {
 			$.ajax({

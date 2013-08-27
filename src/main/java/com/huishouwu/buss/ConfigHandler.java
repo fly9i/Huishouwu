@@ -45,7 +45,7 @@ public class ConfigHandler {
 		logger.debug("Clear type config with key:"+id);
 	}
 	
-
+	@Cacheable(value="typeconfigall")
 	public List<TypeConfigSimple> getAllType(){
 		return configDao.getAllType();
 	}

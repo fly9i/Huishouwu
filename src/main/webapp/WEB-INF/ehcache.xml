@@ -15,7 +15,7 @@
             memoryStoreEvictionPolicy="LRU"
             />
     <cache name="typeconfig"
-            maxElementsInMemory="10000"
+            maxElementsInMemory="1800000"
             eternal="false"
             timeToIdleSeconds="0"
             timeToLiveSeconds="300"
@@ -26,7 +26,18 @@
             memoryStoreEvictionPolicy="LRU">
     </cache>
      <cache name="typeconfigname"
-            maxElementsInMemory="10000"
+            maxElementsInMemory="1800000"
+            eternal="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="300"
+            overflowToDisk="false"
+            maxElementsOnDisk="0"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="0"
+            memoryStoreEvictionPolicy="LRU">
+    </cache>
+     <cache name="typeconfigall"
+            maxElementsInMemory="1800000"
             eternal="false"
             timeToIdleSeconds="0"
             timeToLiveSeconds="300"

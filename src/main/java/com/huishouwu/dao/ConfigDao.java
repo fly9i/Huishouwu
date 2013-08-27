@@ -42,7 +42,7 @@ public class ConfigDao {
 
 	public List<TypeConfigSimple> getAllType(){
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql = "select type,t_name as name,des  from hsw_buss.type_config";
+		String sql = "select distinct type,t_name as name,des  from hsw_buss.type_config";
 		return this.jdbcTemplate.query(sql,new BeanPropertyRowMapper(TypeConfigSimple.class));
 	}
 	

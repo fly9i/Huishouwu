@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.huishouwu.buss.ConfigHandler;
 import com.huishouwu.dao.UserDao;
-import com.huishouwu.pojo.User;
+import com.huishouwu.pojo.TypeConfigSimple;
 
 @Controller
 public class MainController {
@@ -20,6 +20,8 @@ public class MainController {
 	public void setMainDAO(UserDao userDao) {
 		this.userDao = userDao;
 	}
+	
+	
 	@Resource
 	private ConfigHandler configHandler;
 	
@@ -32,6 +34,8 @@ public class MainController {
 	@RequestMapping("old")
 	public String sale_old(Model m) {
 		m.addAttribute("title", "卖旧货");
+		List<TypeConfigSimple> list=configHandler.getAllType();
+		m.addAttribute("typeconfig",list);
 		return "sale_old";
 	} 
 	@RequestMapping("market")

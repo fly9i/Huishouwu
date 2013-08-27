@@ -14,9 +14,14 @@
 
 	<div id="sale_list" class="tabbable tabs-left" style="height: 1000px;">
 		<ul class="nav nav-tabs sale-nav">
-			<li class="active sale-nav-inner"><a href="#" fordiv="bx"> <img
-					style="height: 20px;" src="img/bx.jpg" />&nbsp;&nbsp;冰箱
+		<c:forEach var="type" items="${typeconfig}" varStatus="status">
+		
+		
+			<li class="sale-nav-inner${status.first?' active':''}"><a href="#" fordiv="${type.getName()}"> <img
+					style="height: 20px;" src="img/${type.getName()}.jpg" />&nbsp;&nbsp;${type.getDes()}
 			</a></li>
+			</c:forEach>
+			<!-- 
 			<li><a href="#" fordiv="xyj"> <img style="height: 20px;"
 					src="img/xyj.jpg" />&nbsp;&nbsp;洗衣机
 			</a></li>
@@ -26,13 +31,23 @@
 			<li><a href="#" fordiv="dsj"> <img style="height: 20px;"
 					src="img/ds.jpg" />&nbsp;&nbsp;电视机
 			</a></li>
+			 -->
 		</ul>
 		<div class="tab-content">
 			<ul>
-				<li id="bx" class="content_show">
-					<%@ include file="./huishou/bx.jsp" %>
+			<c:forEach var="type" items="${typeconfig}" varStatus="status">
+			
+				<li id="${type.getName()}" class="${status.first?'content_show':'' }">
+					<form id="form_${type.getName()}" class="well form-horizontal">
+						<fieldset>
+							<legend>${type.getDes() }</legend>
+						</fieldset>
+						<div class="form_container"></div>
+					</form>
 				</li>
-				
+				 
+				</c:forEach>
+				<!-- 
 				<li id="xyj">
 					<form id="form_xyj" class="well form-horizontal">
 						<fieldset>
@@ -49,6 +64,7 @@
 						</fieldset>
 					</form>
 				</li>
+				 -->
 			</ul>
 		</div>
 	</div>

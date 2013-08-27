@@ -8,6 +8,7 @@ public class TypeConfig {
 	private String feature;
 	private String f_id;
 	private int price;
+	private String t_name;
 	public int getId() {
 		return id;
 	}
@@ -44,5 +45,12 @@ public class TypeConfig {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	public String getT_name() {
+		return t_name;
+	}
+	public void setT_name(String t_name) {
+		this.t_name = t_name;
+	}
+	
 	
 }
