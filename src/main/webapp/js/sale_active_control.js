@@ -41,7 +41,14 @@ function addMovie(e) {
 };
 $(document).ready(function() {
 	// $(".add").addMovie();
-	$(document).on("click", ".add", addMovie);
+	$(document).on("click", ".add", function(e){
+		addCart($(this).parents("form"));
+		addMovie(e);
+		
+	});
+	$(document).on("click",".finish",function(){
+		window.location.href="cart";
+	});
 	$(".tab-content li").css({
 		display : "none"
 	});
@@ -63,6 +70,23 @@ $(document).ready(function() {
 	});
 });
 
+function addCart(form,callback,e){
+	$.ajax({
+		type:"POST",
+		url:"cart/add",
+		async:false,
+		data:form.serialize(),
+		success:function(res){
+			res=eval("("+res+")");
+			if(res.code!=200){
+				alert(res.des);
+			}
+			//callback(e);
+		}
+	});
+	
+}
+
 function getTypeConfig(t_name) {
 	var frag = $(document.createDocumentFragment());
 	if ($("#form_" + t_name + " .form_container div").length > 0) {
@@ -72,7 +96,7 @@ function getTypeConfig(t_name) {
 	$
 			.ajax({
 				type : "GET",
-				async : true,
+				async : false,
 				url : "./config/" + t_name,
 				beforeSend : function(xhr) {
 					
@@ -95,7 +119,7 @@ function getTypeConfig(t_name) {
 						var label = $("<label/>").addClass("radio");
 						var input = $("<input/>").attr({
 							type : "radio",
-							name : res[i].t_name + "_desc",
+							name :"desc",
 							checked : "true",
 							value : res[i].f_id
 						});
@@ -109,7 +133,12 @@ function getTypeConfig(t_name) {
 								addto : res[0].t_name,
 								value : "添加" + res[0].des
 							});
-					div_control3.append(addBut);
+					var finalBtn = $("<input/>").addClass("btn finish")
+					.attr({
+						type : "button",
+						value : "进入回收车结算"
+					});
+					div_control3.append(addBut).append("&nbsp;&nbsp;").append(finalBtn);
 
 					var label_count = $("<label/>").addClass("control-label")
 							.attr({

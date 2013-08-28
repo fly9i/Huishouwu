@@ -60,5 +60,6 @@
 					<li id="sale_old"><a href="./old">我要卖旧货</a></li>
 					<li id="market"><a href="./market">积分换礼</a></li>
 					<li id="news"><a href="./news">新闻资讯</a></li>
+					<li id="cart"><a href="./cart">回收车</a></li>
 				</ul>
 			</div>

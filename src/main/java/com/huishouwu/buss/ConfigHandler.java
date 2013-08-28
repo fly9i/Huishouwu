@@ -1,17 +1,13 @@
 package com.huishouwu.buss;
 
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.huishouwu.dao.ConfigDao;
@@ -49,6 +45,9 @@ public class ConfigHandler {
 	public List<TypeConfigSimple> getAllType(){
 		return configDao.getAllType();
 	}
-	
+	@Cacheable("configall")
+	public Map<String,TypeConfig> getAllConfig(){
+		return configDao.getAllConfig();
+	}
 
 }

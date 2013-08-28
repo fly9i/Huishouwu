@@ -19,6 +19,9 @@
 		
 			<li class="sale-nav-inner${status.first?' active':''}"><a href="#" fordiv="${type.getName()}"> <img
 					style="height: 20px;" src="img/${type.getName()}.jpg" />&nbsp;&nbsp;${type.getDes()}
+				<c:if test="${cart.get(type.getName())!=null && cart.get(type.getName())!=0}">
+					<span class="badge badge-success count_${type.getName()}">${cart.get(type.getName())}</span>
+				</c:if>
 			</a></li>
 			</c:forEach>
 			<!-- 
@@ -47,24 +50,7 @@
 				</li>
 				 
 				</c:forEach>
-				<!-- 
-				<li id="xyj">
-					<form id="form_xyj" class="well form-horizontal">
-						<fieldset>
-							<legend>洗衣机</legend>
-						</fieldset>
-					</form></li>
-				<li id="dn">
-					<%@ include file="./huishou/dn.jsp" %>
-				</li>
-				<li id="dsj">
-					<form id="form_dsj" class="well form-horizontal">
-						<fieldset>
-							<legend>电视机</legend>
-						</fieldset>
-					</form>
-				</li>
-				 -->
+				
 			</ul>
 		</div>
 	</div>

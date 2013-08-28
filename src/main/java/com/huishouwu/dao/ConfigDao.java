@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -56,6 +58,20 @@ public class ConfigDao {
 		configList = this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
 				TypeConfig.class));
 		return configList;
+	}
+	
+	public Map<String,TypeConfig> getAllConfig(){
+		Map<String,TypeConfig> allConfigMap=new HashMap<String, TypeConfig>();
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		String sql = "select * from hsw_buss.type_config";
+		List<TypeConfig> configList = new ArrayList<TypeConfig>();
+		configList = this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
+				TypeConfig.class));
+		for(TypeConfig config:configList){
+			allConfigMap.put(config.getF_id(), config);
+		}
+		return allConfigMap;
+		
 	}
 	
 	public List<TypeConfig> getTypeConfigByName(final String name) {
