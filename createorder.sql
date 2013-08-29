@@ -1,0 +1,1 @@
+create table orders (id int(11) auto_increment primary key,fid varchar(32) not null,connector varchar(32),phone varchar(32),addr1 varchar(16),addr2 varchar(16),addr3 varchar(16),addr4 varchar(64),status int,userid varchar(32),addrid varchar(32));

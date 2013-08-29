@@ -32,7 +32,6 @@ public class ConfigController {
 	@ResponseBody
 	public Object getTypeConfig(@PathVariable String type){
 //		return configHandler.getTypeConfig();
-		System.out.println(type);
 		return configHandler.getTypeConfigByName(type);
 	}
 	

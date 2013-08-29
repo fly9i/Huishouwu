@@ -31,8 +31,9 @@ function spideQueue(data){
 			data.second=[];
 			$(html).find(".subarea a").each(function(){
 				var obj={};
-				obj.url=$(this).attr("href");
-				obj.name=$(this).html();
+				obj.path=$(this).attr("href");
+				obj.name=obj.path.split("/")[1];
+				obj.value=$(this).html();
 				data.second.push(obj);
 			});
 			count++;
@@ -52,7 +53,8 @@ getHtml("/zufang/",function(html){
 		var obj={};
 		obj.first={};
 		obj.first.path=$(this).attr("href");
-		obj.first.name=$(this).html();
+		obj.first.name=obj.first.path.split("/")[1];
+		obj.first.value=$(this).html();
 		result.push(obj);
 	});
 	

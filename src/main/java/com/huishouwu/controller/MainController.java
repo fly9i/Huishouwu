@@ -1,5 +1,6 @@
 package com.huishouwu.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.huishouwu.buss.ConfigHandler;
+import com.huishouwu.dao.OrderDao;
 import com.huishouwu.dao.UserDao;
+import com.huishouwu.pojo.Order;
+import com.huishouwu.pojo.TypeConfig;
 import com.huishouwu.pojo.TypeConfigSimple;
+import com.huishouwu.vo.OrderView;
 
 @Controller
 public class MainController {
@@ -26,11 +31,19 @@ public class MainController {
 	}
 
 	@Resource
+	private OrderDao orderDao; 
+	
+	@Resource
 	private ConfigHandler configHandler;
 
 	@RequestMapping("home")
 	public String index(Model m) {
+		List<Order> orderList=orderDao.getOrders();
+		List<OrderView> orderViewList=new ArrayList<OrderView>();
+		Map<String,TypeConfig> configMap=configHandler.getAllConfig();
+		orderViewList=OrderViewHelper.getOrderView(orderList, configMap);
 		m.addAttribute("title", "首页");
+		m.addAttribute("orders",orderViewList);
 		return "index";
 	}
 

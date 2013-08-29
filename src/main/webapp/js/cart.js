@@ -1,5 +1,8 @@
 $(document).ready(function(){
 	caculatePrice();
+	$("#finish").on("click",function(){
+		window.location.href="./order"
+	});
 });
 function caculatePrice(){
 	var price=0;

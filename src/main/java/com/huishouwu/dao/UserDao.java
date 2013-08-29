@@ -54,8 +54,8 @@ public class UserDao {
 
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
 		String sql = "insert into users "
-				+ "(name,pass,email,sign_way,mobile,role,address,create_at,update_at,last_login) "
-				+ "values " + "(?,?,?,?,?,?,?,?,?,?)";
+				+ "(name,pass,email,sign_way,mobile,role,address,create_at,update_at,last_login,userid) "
+				+ "values " + "(?,?,?,?,?,?,?,?,?,?,?)";
 		return this.jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
@@ -71,6 +71,7 @@ public class UserDao {
 				ps.setObject(8, user.getCreate_at());
 				ps.setObject(9, user.getUpdate_at());
 				ps.setObject(10, user.getLast_login());
+				ps.setObject(11, user.getUserid());
 			}
 		});
 	}

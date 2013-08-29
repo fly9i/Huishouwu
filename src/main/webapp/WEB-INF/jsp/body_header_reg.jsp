@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<div id="cover">
+		<img src="./img/close.png"
+			style="position: absolute; border: 0px; right: 20px; top: 20px; width: 25px; height: 25px; cursor: pointer;"
+			id="close" />
+	</div>
 <div id="form_reg">
 	<form id="form_register" class="well form-horizontal">
 		<fieldset>
@@ -16,6 +21,15 @@
 				<div class="controls">
 					<input type="text" required email='true' id="email" name="email"
 						placeholder="输入邮箱">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="role">角色</label>
+				<div class="controls">
+					<select name="role" id="role">
+						<option value="1">普通用户</option>
+						<option value="2">回收商</option>
+					</select>
 				</div>
 			</div>
 			<div class="control-group">

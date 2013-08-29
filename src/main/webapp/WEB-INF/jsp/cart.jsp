@@ -12,16 +12,16 @@
 <%@ include file="body_header.jsp"%>
 <c:choose>
 	<c:when test="${cart!=null && !cart.isEmpty() }">
-		<div class="span11" style="padding:10px;">
+		<div class="span11" style="padding: 10px;">
 			<table class="table table-bordered span9">
-			<tr>
-			<th>序号</th>
-			<th>项目</th>
-			<th>特点</th>
-			<th>数量</th>
-			<th>价格(￥元)</th>
-			<th>删除</th>
-			</tr>
+				<tr>
+					<th>序号</th>
+					<th>项目</th>
+					<th>特点</th>
+					<th>数量</th>
+					<th>价格(￥元)</th>
+					<th>删除</th>
+				</tr>
 				<c:forEach var="cartItem" items="${cart}" varStatus="status">
 					<tr>
 						<td>${status.index+1}</td>
@@ -32,15 +32,19 @@
 						<td><a href="order/del/${cartItem.getFid()}">删除</a></td>
 					</tr>
 				</c:forEach>
-				<tr><td colspan="3">总计:<span class="total" style="font-weight:bold;font-size:25px;"></span></td><td colspan="3"><a class="btn btn-primary">结算</a></td></tr>
+				<tr>
+					<td colspan="3">总计:<span class="total"
+						style="font-weight: bold; font-size: 25px;"></span></td>
+					<td colspan="3"><a class="btn btn-primary" id="finish">结算</a></td>
+				</tr>
 			</table>
 		</div>
 
 	</c:when>
 	<c:otherwise>
-	<div class="span11" style="height:50px;text-align:center;">
-	空的回收车！<a href="home">返回首页</a>
-	</div>
+		<div class="span11" style="height: 50px; text-align: center;">
+			空的回收车！<a href="home">返回首页</a>
+		</div>
 
 	</c:otherwise>
 </c:choose>

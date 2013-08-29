@@ -60,13 +60,14 @@ $(document).ready(function() {
 		e.preventDefault();
 		$(this).tab("show");
 		var showid = "#" + $(this).attr("fordiv");
-		getTypeConfig($(this).attr("fordiv"));
+		
 		$(".tab-content .content_show").css({
 			display : "none"
 		});
 		$(showid).addClass("content_show").css({
 			"display" : "block"
 		});
+		getTypeConfig($(this).attr("fordiv"));
 	});
 });
 
@@ -74,7 +75,7 @@ function addCart(form,callback,e){
 	$.ajax({
 		type:"POST",
 		url:"cart/add",
-		async:false,
+		async:true,
 		data:form.serialize(),
 		success:function(res){
 			res=eval("("+res+")");
@@ -96,7 +97,7 @@ function getTypeConfig(t_name) {
 	$
 			.ajax({
 				type : "GET",
-				async : false,
+				async : true,
 				url : "./config/" + t_name,
 				beforeSend : function(xhr) {
 					

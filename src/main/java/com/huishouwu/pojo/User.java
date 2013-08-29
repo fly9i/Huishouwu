@@ -14,6 +14,7 @@ public class User {
 	private Date create_at;
 	private Date update_at;
 	private Date last_login;
+	private String userid;
 	public String getName() {
 		return name;
 	}
@@ -73,6 +74,12 @@ public class User {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 	
 }
