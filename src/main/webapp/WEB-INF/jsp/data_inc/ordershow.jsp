@@ -15,6 +15,7 @@
 					<td>${order.getOrderid()}</td>
 					<td>${order.getTypeName()}</td>
 					<td>${order.getFeature() }</td>
+					<c:if test=""></c:if>
 					<c:choose>
 						<c:when test="${order.getStatus()==1 }">
 							<td>可接单</td>
@@ -27,6 +28,7 @@
 							<td>已完成</td>
 						</c:otherwise>
 					</c:choose>
+					
 					
 					<td><a class="btn">接单</a></td>
 				</tr>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<div id="cover">
-		<img src="./img/close.png"
+		<img src="${mainpath}/img/close.png"
 			style="position: absolute; border: 0px; right: 20px; top: 20px; width: 25px; height: 25px; cursor: pointer;"
 			id="close" />
 	</div>

@@ -1,4 +1,4 @@
-function addMovie(e) {
+	function addMovie(e) {
 	// this.on("click",function(e){
 
 	var addto = $(e.target).attr("addto");

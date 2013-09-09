@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.huishouwu.buss.ConfigHandler;
+import com.huishouwu.dao.NewsDao;
 import com.huishouwu.dao.OrderDao;
 import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.Order;
@@ -36,7 +37,10 @@ public class MainController {
 	@Resource
 	private ConfigHandler configHandler;
 
-	@RequestMapping("home")
+	@Resource
+	private NewsDao newsDao;
+	
+	@RequestMapping("index")
 	public String index(Model m) {
 		List<Order> orderList=orderDao.getOrders();
 		List<OrderView> orderViewList=new ArrayList<OrderView>();
@@ -77,8 +81,7 @@ public class MainController {
 
 	@RequestMapping("news")
 	public String news(Model m) {
-		m.addAttribute("title", "新闻");
-
+		m.addAttribute(" ", newsDao.getAllNews());
 		return "news";
 	}
 }

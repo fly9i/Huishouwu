@@ -34,6 +34,9 @@ public class AdminController {
 		List<Order> orderList=null;
 		if(u!=null && u.getRole()==2){
 			orderList=orderDao.getOrdersByManagerid(u.getUserid());
+			
+		}else{
+			return "admin";
 		}
 		m.addAttribute("title","管理");
 		
@@ -42,5 +45,10 @@ public class AdminController {
 		orderViewList=OrderViewHelper.getOrderView(orderList, configMap);
 		m.addAttribute("orders", orderViewList);
 		return "admin";
+	}
+	
+	@RequestMapping("/test")
+	public String test(){
+		return "test";
 	}
 }

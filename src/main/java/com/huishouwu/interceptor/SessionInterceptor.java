@@ -1,14 +1,13 @@
 package com.huishouwu.interceptor;
 
 import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class SessionInterceptor extends HandlerInterceptorAdapter {
@@ -54,5 +53,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		return super
 				.preHandle(req, res, handler);
 	}
+	
+
 
 }

@@ -15,14 +15,10 @@
 
 	<!-- Enables controllers mapped with @RequestMapping annotations, formatting 
 		annotations @NumberFormat @DateTimeFormat, and JSR 303 style validation -->
-		<!-- 
-	<mongo:mongo id="mongo" host="rosegun.com" port="20000"></mongo:mongo>
-	<mongo:db-factory dbname="hsw" mongo-ref="mongo"></mongo:db-factory>
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-	</bean>
-	<mongo:mapping-converter></mongo:mapping-converter>
-	 -->
+	<!-- <mongo:mongo id="mongo" host="rosegun.com" port="20000"></mongo:mongo> 
+		<mongo:db-factory dbname="hsw" mongo-ref="mongo"></mongo:db-factory> <bean 
+		id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate"> 
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" /> </bean> <mongo:mapping-converter></mongo:mapping-converter> -->
 
 	<cache:annotation-driven />
 	<bean id="cacheManagerFactory"
@@ -50,9 +46,12 @@
 
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/*" />
-
 			<bean class="com.huishouwu.interceptor.SessionInterceptor"></bean>
 		</mvc:interceptor>
+
+	</mvc:interceptors>
+	<mvc:interceptors>
+		<bean class="com.huishouwu.interceptor.PathInterceptor"></bean>
 	</mvc:interceptors>
 
 	<mvc:resources mapping="/resources/**"

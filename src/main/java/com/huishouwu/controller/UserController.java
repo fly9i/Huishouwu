@@ -75,7 +75,7 @@ public class UserController {
 	public String addUser(@RequestParam("username") String name,
 			@RequestParam("email") String email,
 			@RequestParam("mobile") String mobile,
-			@RequestParam("password1") String pass,@RequestParam(defaultValue="1") String role, HttpServletRequest req) {
+			@RequestParam("password1") String pass, HttpServletRequest req) {
 
 		User user = new User();
 		user.setName(name);
@@ -85,7 +85,7 @@ public class UserController {
 		user.setPass(md5.encodePassword(pass, salt));
 
 		user.setAddress("");
-		user.setRole(Integer.parseInt(role));
+		user.setRole(1);
 		user.setSing_way("web");
 		user.setCreate_at(new Date());
 		user.setUpdate_at(new Date());

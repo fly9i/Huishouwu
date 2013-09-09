@@ -4,7 +4,7 @@
 		<div id="top" class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="home"> 回收屋--为您生活添色彩 </a>
+					<a class="brand" href="index"> 回收屋--为您生活添色彩 </a>
 					<ul class="nav pull-right">
 					<li class="dropdown">
 							<c:choose >

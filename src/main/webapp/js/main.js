@@ -1,19 +1,15 @@
 
-
-
-
-
 $(document).ready(function() {
-	
+
 	$("#form_register").validate({
 		submitHandler : function() {
 			$.ajax({
 				type : "POST",
 				async : true,
-				url : "./user/add",
+				url : "/web/user/add",
 				data : $('#form_register').serialize(),
 				success : function(res) {
-					res=eval("("+res+")");
+					res = eval("(" + res + ")");
 					alert(res.message);
 					if (res.code == 200) {
 						window.location.reload();
@@ -22,7 +18,9 @@ $(document).ready(function() {
 			});
 		}
 	});
-	$("#" + tab).addClass("active");
+	if ((typeof tab) != 'undefined') {
+		$("#" + tab).addClass("active");
+	}
 	var close = function() {
 		$("#cover").hide();
 		$("#form_reg").hide();
@@ -33,17 +31,17 @@ $(document).ready(function() {
 		$("#cover").show();
 		$("#form_reg").show();
 	});
-	
-	$("#logout").on("click",function(){
+
+	$("#logout").on("click", function() {
 		$.ajax({
-			url:"user/logout",
-			async:true,
-			type:"GET",
-			success:function(res){
-				res=eval("("+res+")");
-				if(res.code==200){
+			url : "user/logout",
+			async : true,
+			type : "GET",
+			success : function(res) {
+				res = eval("(" + res + ")");
+				if (res.code == 200) {
 					window.location.reload();
-				}else{
+				} else {
 					alert(res.message);
 				}
 			}
@@ -60,10 +58,10 @@ $(document).ready(function() {
 			success : (function(btn) {
 				return function(res) {
 					btn.button("reset");
-					res=eval("("+res+")");
-					if(res.code==200){
+					res = eval("(" + res + ")");
+					if (res.code == 200) {
 						window.location.reload();
-					}else{
+					} else {
 						alert(res.message);
 					}
 				};
@@ -72,8 +70,6 @@ $(document).ready(function() {
 	});
 
 });
-
-
 
 $.fn.changeDiv = function() {
 	return this.each(function() {

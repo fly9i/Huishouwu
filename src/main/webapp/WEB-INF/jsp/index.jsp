@@ -10,10 +10,7 @@
 </script>
 </head>
 <%@ include file="body_header.jsp"%>
-<div class="span11" >
-		<%@ include file="data_inc/ordershow.jsp" %>
 
-</div>
 
 <!-- 
 <div class="span4" id="right">
