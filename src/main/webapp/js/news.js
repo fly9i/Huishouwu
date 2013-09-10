@@ -1,0 +1,9 @@
+$(function(){
+	$(".article").on("mouseover",function(){
+		$(this).css({"background-color":"#FFF68F",cursor:"pointer"});
+	}).on("mouseout",function(){
+		$(this).css({"background-color":"#FFFFFF"});
+	}).on("click",function(){
+		window.location.href=$(this).find("a").attr("link");
+	});
+});

@@ -40,9 +40,20 @@ public class NewsDao {
 		this.dynamicDataSource = dynamicDataSource;
 	}
 
-	public List<News> getAllNews() {
+	public List<News> getAllNews(int type) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql = "select * from hsw_buss.news";
+		String sql = "select * from hsw_buss.news where 1=1";
+		if(type!=0){
+			sql+=" and flag="+type;
+		}
+		sql+=" by time desc";
+		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
+				News.class));
+	}
+	
+	public List<News> getAllNewsLatest() {
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		String sql = "select * from hsw_buss.news where flag=1 order by time desc limit 10;";
 		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
 				News.class));
 	}

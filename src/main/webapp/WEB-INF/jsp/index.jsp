@@ -39,13 +39,10 @@ $(function(){
 		</ul>
 	</div>
 </div>
-<div class="span5" style="height: 500px; background-color: blue;">
-asdfasdfasda<br/>
-fasdfasd<br/>
-fasd<br/>
-fas<br/>
+<div class="span5" style="height: 500px; ">
+
 <div class="pull-right">
-<a href="news">>>更多</a>
+<a href="news">&gt;&gt;更多</a>
 </div>
 </div>
 <%@ include file="body_footer.jsp"%>

@@ -79,7 +79,7 @@ public class MainController {
 
 	@RequestMapping("news")
 	public String news(Model m) {
-		m.addAttribute("news", newsDao.getAllNews());
+		m.addAttribute("news", newsDao.getAllNews(1));
 				return "news";
 	}
 }
