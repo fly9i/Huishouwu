@@ -1,5 +1,6 @@
 package com.huishouwu.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,10 +17,7 @@ import com.huishouwu.buss.ConfigHandler;
 import com.huishouwu.dao.NewsDao;
 import com.huishouwu.dao.OrderDao;
 import com.huishouwu.dao.UserDao;
-import com.huishouwu.pojo.Order;
-import com.huishouwu.pojo.TypeConfig;
 import com.huishouwu.pojo.TypeConfigSimple;
-import com.huishouwu.vo.OrderView;
 
 @Controller
 public class MainController {
@@ -41,13 +39,13 @@ public class MainController {
 	private NewsDao newsDao;
 	
 	@RequestMapping("index")
-	public String index(Model m) {
-		List<Order> orderList=orderDao.getOrders();
-		List<OrderView> orderViewList=new ArrayList<OrderView>();
-		Map<String,TypeConfig> configMap=configHandler.getAllConfig();
-		orderViewList=OrderViewHelper.getOrderView(orderList, configMap);
+	public String index(Model m,HttpServletRequest req) {
+		String root=req.getServletContext().getRealPath("/");
+		String realpath=root+"uploads/slideshow/";
+		File f=new File(realpath);
+		String [] files=f.list();
 		m.addAttribute("title", "首页");
-		m.addAttribute("orders",orderViewList);
+		m.addAttribute("files", files);
 		return "index";
 	}
 
@@ -81,7 +79,7 @@ public class MainController {
 
 	@RequestMapping("news")
 	public String news(Model m) {
-		m.addAttribute(" ", newsDao.getAllNews());
-		return "news";
+		m.addAttribute("news", newsDao.getAllNews());
+				return "news";
 	}
 }

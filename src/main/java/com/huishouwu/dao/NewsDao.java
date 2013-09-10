@@ -108,7 +108,7 @@ public class NewsDao {
 					ps.setString(1, author);
 					ps.setString(2, title);
 					ps.setString(3, content);
-					ps.setDate(4, new java.sql.Date(time.getTime()));
+					ps.setObject(4, time);
 			}
 
 		

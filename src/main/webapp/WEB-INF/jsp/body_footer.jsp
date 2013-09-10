@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <div class="span12" style="text-align: left; background-color: #CCCCCC;">版权所有
-	&copy;Zhujiwu.com 2013-2013</div>
+	&copy;Huishouwu.com 2013-2013</div>
 </div>
 
 </div>

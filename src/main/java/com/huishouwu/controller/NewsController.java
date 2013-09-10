@@ -1,10 +1,12 @@
 package com.huishouwu.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +35,11 @@ public class NewsController {
 		return "newsadmin";
 	}
 	@RequestMapping("news/{id}")
-	@ResponseBody
 	public String getNewsById(@PathVariable int id,Model m){
-		m.addAttribute("news",newsDao.getNewsById(id));
+
+		News news=newsDao.getNewsById(id).get(0);
+		m.addAttribute("title", news.getTitle());
+		m.addAttribute("news",news);
 		return "news_one";
 	}
 }
