@@ -1,31 +1,24 @@
 package com.huishouwu.vo;
 
+import java.util.Date;
+import java.util.List;
+
 public class OrderView {
 	private String orderid;
-	private String typeName;
-	private String feature;
 	private String address;
 	private String connect;
 	private int status;
-	
+	private List<OrderFeature> orderFeatures;
+	private int total;
+	private Date create;
+	private Date update;
 	public String getOrderid() {
 		return orderid;
 	}
 	public void setOrderid(String orderid) {
 		this.orderid = orderid;
 	}
-	public String getTypeName() {
-		return typeName;
-	}
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
-	}
-	public String getFeature() {
-		return feature;
-	}
-	public void setFeature(String feature) {
-		this.feature = feature;
-	}
+	
 	public String getAddress() {
 		return address;
 	}
@@ -43,6 +36,35 @@ public class OrderView {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+	
+	public List<OrderFeature> getOrderFeatures() {
+		return orderFeatures;
+	}
+	public void setOrderFeatures(List<OrderFeature> orderFeatures) {
+		this.orderFeatures = orderFeatures;
+	}
+	public int getTotal() {
+		for(OrderFeature of:this.getOrderFeatures()){
+			total+=of.getPrice();
+		}
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public Date getCreate() {
+		return create;
+	}
+	public void setCreate(Date create) {
+		this.create = create;
+	}
+	public Date getUpdate() {
+		return update;
+	}
+	public void setUpdate(Date update) {
+		this.update = update;
 	}
 	
 }

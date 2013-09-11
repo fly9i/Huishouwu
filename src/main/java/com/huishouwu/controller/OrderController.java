@@ -26,6 +26,7 @@ import com.huishouwu.pojo.TypeConfig;
 import com.huishouwu.pojo.User;
 import com.huishouwu.util.Utils;
 import com.huishouwu.vo.CartItem;
+import com.huishouwu.vo.OrderView;
 
 @Controller
 public class OrderController {
@@ -62,7 +63,7 @@ public class OrderController {
 		return "redirect:../../cart";
 	}
 
-	@RequestMapping("order")
+	@RequestMapping("orderpre")
 	public String toOrder(Model m, HttpServletRequest req) {
 		Map<String, TypeConfig> typeConfigMap = configHandler.getAllConfig();
 		Map<String, Map<String, Integer>> map = new HashMap<String, Map<String, Integer>>();
@@ -73,7 +74,7 @@ public class OrderController {
 		} else {
 			m.addAttribute("cart", null);
 		}
-		return "order";
+		return "orderpre";
 	}
 
 	@RequestMapping("order/add")
@@ -84,6 +85,10 @@ public class OrderController {
 			@RequestParam(defaultValue = "匿名") String connector,
 			@RequestParam(defaultValue = "") String phone, Model m,
 			HttpServletRequest req) {
+
+		/**
+		 * 每一种类型（电视机等），每一种feature（21寸彩电等）数量
+		 */
 		Map<String, Map<String, Integer>> cart = (Map<String, Map<String, Integer>>) req
 				.getSession().getAttribute("cart");
 		Map<String, TypeConfig> typeConfigMap = configHandler.getAllConfig();
@@ -92,28 +97,45 @@ public class OrderController {
 		String userid = "";
 		User u = (User) req.getSession().getAttribute("user");
 		if (u != null) {
-			userid = u.getEmail();
+			userid = u.getUserid();
 		}
+
+		Order order = new Order();
+
+		order.setConnector(connector);
+		order.setOrderid(orderid);
+		order.setPhone(phone);
+		order.setStatus(1);
+		order.setUserid(userid);
+		order.setAddr1(addr1);
+		order.setAddr2(addr2);
+		order.setAddr3(addr3);
+		order.setAddr4(addr4);
+
+		String fids = "";
+		int count = 0;
 		for (String key : cart.keySet()) {
 			for (String k : cart.get(key).keySet()) {
-				Order order = new Order();
-				order.setFid(k);
-				order.setConnector(connector);
-				order.setOrderid(orderid);
-				order.setPhone(phone);
-				order.setStatus(1);
-				order.setUserid(userid);
-				order.setAddr1(addr1);
-				order.setAddr2(addr2);
-				order.setAddr3(addr3);
-				order.setAddr4(addr4);
-				orderDao.addOrder(order);
+				count++;
+				if (count == 1) {
+					fids = k+"@@"+cart.get(key).get(k);
+				} else {
+					fids += "," + k+"@@"+cart.get(key).get(k);
+				}
 			}
+		}
+		order.setFid(fids);
+
+		if (count != 0) {
+			orderDao.addOrder(order);
 		}
 		req.getSession().removeAttribute("cart");
 		return "redirect:../";
 	}
 
+	/**
+	 * cart 每一种类型（电视机等），每一种feature（21寸彩电等）数量
+	 */
 	@RequestMapping("cart/add")
 	@ResponseBody
 	public String addOrder(@RequestParam(defaultValue = "") String desc,
@@ -169,14 +191,56 @@ public class OrderController {
 		return cartItems;
 	}
 
+	@RequestMapping("order")
+	public String order(Model m,HttpServletRequest req,@RequestParam(defaultValue="fd") String tp){
+		/**
+		 * tp 参数表示查找订单类型，fd则为所有合适的，mg则表示管理自身的
+		 */
+		User u=(User)req.getSession().getAttribute("users");
+		m.addAttribute("user", u);
+		List<Order> orderList=null;
+		if(u!=null){
+			if(u.getRole()==0){
+				if(tp.equals("fd")){
+					orderList=orderDao.getOrders();
+				}else{
+					orderList=orderDao.getOrdersByManagerid(u.getUserid());
+				}
+			}else if(u.getRole()==1){
+				orderList=orderDao.getOrdersByUserid(u.getUserid());
+			}
+		}
+		List<OrderView> orderViewList = new ArrayList<OrderView>();
+		Map<String, TypeConfig> configMap = configHandler.getAllConfig();
+		orderViewList = OrderViewHelper.getOrderView(orderList, configMap);
+		m.addAttribute("orders", orderViewList);
+			
+		return "admin/order";
+	}
+	
 	@RequestMapping("order/accept")
 	@ResponseBody
-	public String acceptOrder(@RequestParam String [] orderids,HttpServletRequest req){
-		User u=(User) req.getSession().getAttribute("user");
-		if(u==null && u.getRole()==1){
-			return "<script type='text/javascript'>alert('只有回收商可以进行接单');window.location.href='../home'</script>";
+	public String acceptOrder(@RequestParam String[] orderids,
+			HttpServletRequest req) {
+		User u = (User) req.getSession().getAttribute("user");
+		if (u == null || u.getRole() !=0) {
+			return "<script type='text/javascript'>alert('只有回收商可以进行接单');window.location.href='../'</script>";
 		}
-		orderDao.acceptOrder(orderids,u.getUserid());
+		orderDao.changeOrder(orderids, u.getUserid(),OrderConfig.ORDER_ACCEPTED);
 		return "<script type='text/javascript'>alert('接单成功');window.location.href='../home'</script>";
 	}
+	
+	@RequestMapping("order/finish")
+	@ResponseBody
+	public String finishOrder(@RequestParam String[] orderids,
+			HttpServletRequest req) {
+		User u = (User) req.getSession().getAttribute("user");
+		if (u == null || (u.getRole() != 1 && u.getRole()!=0)) {
+			return "<script type='text/javascript'>alert('你无法进行结束订单操作。');window.location.href='../'</script>";
+		}
+		orderDao.changeOrder(orderids, u.getUserid(),OrderConfig.ORDER_FINISH);
+		return "<script type='text/javascript'>alert('结束订单成功');window.location.href='../'</script>";
+	}
+	
+	
 }

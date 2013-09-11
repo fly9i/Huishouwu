@@ -1,5 +1,7 @@
 package com.huishouwu.pojo;
 
+import java.util.Date;
+
 public class Order {
 	private int id;
 	private String orderid;
@@ -13,6 +15,8 @@ public class Order {
 	private int status;
 	private String userid;
 	private String addrid;
+	private Date create_at;
+	private Date update_at;
 	public int getId() {
 		return id;
 	}
@@ -84,6 +88,18 @@ public class Order {
 	}
 	public void setAddrid(String addrid) {
 		this.addrid = addrid;
+	}
+	public Date getCreate_at() {
+		return create_at;
+	}
+	public void setCreate_at(Date create_at) {
+		this.create_at = create_at;
+	}
+	public Date getUpdate_at() {
+		return update_at;
+	}
+	public void setUpdate_at(Date update_at) {
+		this.update_at = update_at;
 	}
 	
 }

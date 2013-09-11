@@ -35,10 +35,10 @@
 		<div class="control-group">
 			<label class="control-label" for="content">作者</label>
 			<div class="controls">
-				<textarea id="content" name="content">这里写你的初始化内容</textarea>
+				<textarea id="content" name="content" ></textarea>
 			</div>
 		</div>
-		<div class="controls">
+		<div class="controls" >
 			<input type="submit" class="btn" id="addnews" value="提交" />
 		</div>
 	</fieldset>

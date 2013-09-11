@@ -26,14 +26,16 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				break;
 			}
 		}
-		PrintWriter pw=res.getWriter();
+		
 		if(beFilter){
 			if(req.getSession().getAttribute("user")==null){
+				PrintWriter pw=res.getWriter();
 				pw.print("<script>alert('请先登录！');window.location.href='home'</script>");
+				pw.close();
 			}
-			pw.close();
 			return false;
 		}
+		
 //		Map paramsMap = req.getParameterMap();  
 //		  
 //        for (Iterator<Map.Entry> it = paramsMap.entrySet().iterator(); it  

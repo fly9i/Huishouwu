@@ -3,7 +3,7 @@ package com.huishouwu.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -18,7 +18,6 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import com.huishouwu.pojo.Order;
-import com.huishouwu.pojo.User;
 import com.huishouwu.util.CustomerContextHolder;
 
 @Repository
@@ -45,7 +44,7 @@ public class OrderDao {
 	@SuppressWarnings("unchecked")
 	public List<Order> getOrdersByOrderid(final String orderid){
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		final String sql = "select * from hsw_buss.orders where orderid=?";
+		final String sql = "select * from hsw_buss.orders where del=0 and orderid=?";
 		return this.jdbcTemplate.query(new PreparedStatementCreator() {
 			
 			@Override
@@ -59,11 +58,29 @@ public class OrderDao {
 		}, new BeanPropertyRowMapper(Order.class));
 	
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Order> getOrdersByUserid(final String userid){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "select * from hsw_buss.orders where del=0 and userid=?";
+		return this.jdbcTemplate.query(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				// TODO Auto-generated method stub
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setString(1, userid);
+				return ps;
+			}
+		}, new BeanPropertyRowMapper(Order.class));
+	
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Order> getOrdersByManagerid(final String managerid){
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		final String sql = "select * from hsw_buss.orders where manager=?";
+		final String sql = "select * from hsw_buss.orders where del=0 and manager=?";
 		return this.jdbcTemplate.query(new PreparedStatementCreator() {
 			
 			@Override
@@ -81,13 +98,51 @@ public class OrderDao {
 	
 	public List<Order> getOrders(){
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		final String sql = "select * from hsw_buss.orders";
+		final String sql = "select * from hsw_buss.orders where del=0";
 		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(Order.class));
-	
 	}
-	public int acceptOrder(final String [] orderids,final String userid){
+	
+	public List<Order> getOrdersSorted(String ob,String st){
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		final String sql = "update hsw_buss.orders set manager=?,status=0 where orderids=?";
+		String sql = "select * from hsw_buss.orders where del=0";
+		if(ob!=null){
+			if(ob.equals("c")){
+				sql+=" order by create_at";
+			}else{
+				sql+=" order by update_at";
+			}
+			if(st!=null){
+				if(st.equals("a")){
+					sql+=" asc";
+				}else{
+					sql+=" desc";
+				}
+			}
+		}
+		
+		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(Order.class));
+	}
+	
+	public int deleteOrder(final String orderid){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql="update hsw_buss.orders set del=1 where orderid=?";
+		return this.jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				// TODO Auto-generated method stub
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setString(1,orderid);
+				return ps;
+			}
+		});
+	}
+	
+	public int changeOrder(final String [] orderids,final String userid,final int status){
+		
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "update hsw_buss.orders set manager=?,status=?,update_at=? where orderid in ?";
 		return this.jdbcTemplate.update(new PreparedStatementCreator() {
 			
 			@Override
@@ -96,7 +151,9 @@ public class OrderDao {
 				// TODO Auto-generated method stub
 				PreparedStatement ps=con.prepareStatement(sql);
 				ps.setString(1, userid);
-				ps.setString(2, orderids[0]);
+				ps.setInt(2, status);
+				ps.setObject(3, new Date());
+				ps.setObject(4, orderids);
 				return ps;
 			}
 		});
@@ -106,8 +163,8 @@ public class OrderDao {
 
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
 		String sql = "insert into hsw_buss.orders "
-				+ "(orderid,fid,connector,phone,addr1,addr2,addr3,addr4,status,userid,addrid) "
-				+ "values " + "(?,?,?,?,?,?,?,?,?,?,?)";
+				+ "(orderid,fid,connector,phone,addr1,addr2,addr3,addr4,status,userid,addrid,create_at,update_at) "
+				+ "values " + "(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		return this.jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
@@ -124,6 +181,8 @@ public class OrderDao {
 				ps.setObject(9, order.getStatus());
 				ps.setObject(10, order.getUserid());
 				ps.setObject(11, order.getAddrid());
+				ps.setObject(12, new Date());
+				ps.setObject(13, new Date());
 			}
 		});
 	}

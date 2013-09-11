@@ -23,15 +23,7 @@
 						placeholder="输入邮箱">
 				</div>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="role">角色</label>
-				<div class="controls">
-					<select name="role" id="role">
-						<option value="1">普通用户</option>
-						<option value="0">回收商</option>
-					</select>
-				</div>
-			</div>
+			
 			<div class="control-group">
 				<label class="control-label" for="mobile">手机</label>
 				<div class="controls">

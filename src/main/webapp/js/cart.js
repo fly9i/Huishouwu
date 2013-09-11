@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	caculatePrice();
 	$("#finish").on("click",function(){
-		window.location.href="./order"
+		window.location.href="./orderpre"
 	});
 });
 function caculatePrice(){

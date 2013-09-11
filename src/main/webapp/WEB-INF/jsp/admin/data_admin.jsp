@@ -4,6 +4,10 @@
 <html>
 <head>
 <%@ include file="../header.jsp"%>
+<script type="text/javascript" src="${mainpath}/js/admin/data.js"></script>
+<style type="text/css">
+
+</style>
 </head>
 <body>
 	<div class="span9">

@@ -75,27 +75,37 @@ public class UserController {
 	public String addUser(@RequestParam("username") String name,
 			@RequestParam("email") String email,
 			@RequestParam("mobile") String mobile,
-			@RequestParam("password1") String pass, @RequestParam String role,
+			@RequestParam("password1") String pass,
+			@RequestParam(defaultValue = "1") String role,
 			HttpServletRequest req) {
 
 		User user = new User();
+		User u = (User) req.getSession().getAttribute("user");
+		if (u != null && u.getRole() == 2) {
+			if (role.equals("2")) {
+				user.setRole(2);
+			} else if (role.equals("0")) {
+				user.setRole(0);
+			} else {
+				user.setRole(1);
+			}
+		}else{
+			user.setRole(1);
+		}
+
 		user.setName(name);
 		user.setEmail(email);
 		user.setMobile(mobile);
 
 		user.setPass(md5.encodePassword(pass, salt));
-		if (role.equals("1")) {
-			user.setRole(1);
-		} else {
-			user.setRole(0);
-		}
+
 		user.setAddress("");
 
 		user.setSing_way("web");
 		user.setCreate_at(new Date());
 		user.setUpdate_at(new Date());
 		user.setUserid(Utils.md5(user.getName() + "_" + user.getEmail() + "_"
-				+ user.getMobile()));
+				+ user.getMobile()+"_"+new Date().getTime()));
 
 		try {
 			user.setLast_login(DateUtils.parseDate("2000-01-01 00:00:00",
@@ -109,7 +119,7 @@ public class UserController {
 		String msg = "";
 		try {
 			result = this.userDao.addUser(user);
-			msg = "注册成功。";
+			msg = "添加用户成功。";
 		} catch (Exception e) {
 			logger.error("User register err.", e);
 			msg = e.getMessage();
@@ -117,7 +127,9 @@ public class UserController {
 
 		if (result == 1) {
 			code = 200;
-			req.getSession().setAttribute("user", user);
+			if (u == null) {
+				req.getSession().setAttribute("user", user);
+			}
 		}
 		return "{code:" + code + ",message:'" + msg + "'}";
 	}

@@ -48,18 +48,17 @@ public class AdminController {
 
 		User u = (User) req.getSession().getAttribute("user");
 		m.addAttribute("user", u);
-		if(u==null || u.getRole()!=2){
-			return "redirect:./";
-		}
+		
 		return "admin/admin";
 	}
 
 	@RequestMapping("/order")
-	public String dataAdmin(Model m, HttpServletRequest req) {
+	public String dataAdmin(@RequestParam(defaultValue="c") String ob,@RequestParam(defaultValue="d") String st,Model m, HttpServletRequest req) {
 		User u = (User) req.getSession().getAttribute("user");
+		m.addAttribute("user", u);
 		List<Order> orderList = null;
 		if (u != null && u.getRole() == 2) {
-			orderList = orderDao.getOrdersByManagerid(u.getUserid());
+			orderList = orderDao.getOrders();
 			List<OrderView> orderViewList = new ArrayList<OrderView>();
 			Map<String, TypeConfig> configMap = configHandler.getAllConfig();
 			orderViewList = OrderViewHelper.getOrderView(orderList, configMap);
@@ -86,13 +85,31 @@ public class AdminController {
 		}
 
 	}
+	@RequestMapping("/user")
+	public String user(HttpServletRequest req, Model m) {
+		User u = (User) req.getSession().getAttribute("user");
+		m.addAttribute("user", u);
+		if (u != null && u.getRole()==2) {
+			return "admin/user_admin";
+		} else {
+			String ss = "请以管理员身份登录";
+			try {
+				ss = URLEncoder.encode(ss, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "redirect:../alert?des=" + ss;
+		}
+
+	}
 
 	@RequestMapping("/pic")
 	public String pic(HttpServletRequest req, Model m) {
 		User u = (User) req.getSession().getAttribute("user");
 		m.addAttribute("user", u);
 		if (u != null && u.getRole()==2) {
-			List<HomePicture> pics = contentDao.getPicture(0);
+			List<HomePicture> pics = contentDao.getPicture(1);
 			m.addAttribute("pics", pics);
 			return "admin/pic_admin";
 		} else {
@@ -140,4 +157,27 @@ public class AdminController {
 		}
 		return "redirect:./pic";
 	}
+	
+	@RequestMapping("/orderdel")
+	@ResponseBody
+	public String delOrder(@RequestParam String id,HttpServletRequest req,Model m){
+		User u = (User) req.getSession().getAttribute("user");
+		m.addAttribute("user", u);
+		if (u != null && u.getRole()==2) {
+			orderDao.deleteOrder(id);
+			return "{code:200,des:'删除成功。'}";
+		} else {
+			String ss = "请以管理员身份登录";
+			try {
+				ss = URLEncoder.encode(ss, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "redirect:../alert?des=" + ss;
+		}
+		
+	}
+	
+	
 }
