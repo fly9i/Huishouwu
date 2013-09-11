@@ -110,7 +110,8 @@ public class OrderController {
 				orderDao.addOrder(order);
 			}
 		}
-		return "redirect:../home";
+		req.getSession().removeAttribute("cart");
+		return "redirect:../";
 	}
 
 	@RequestMapping("cart/add")

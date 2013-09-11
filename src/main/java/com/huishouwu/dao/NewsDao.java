@@ -46,7 +46,7 @@ public class NewsDao {
 		if(type!=0){
 			sql+=" and flag="+type;
 		}
-		sql+=" by time desc";
+		sql+=" order by time desc";
 		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
 				News.class));
 	}

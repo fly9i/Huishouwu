@@ -1,6 +1,7 @@
 package com.huishouwu.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.huishouwu.buss.ConfigHandler;
+import com.huishouwu.dao.ContentDao;
 import com.huishouwu.dao.NewsDao;
 import com.huishouwu.dao.OrderDao;
 import com.huishouwu.dao.UserDao;
+import com.huishouwu.pojo.HomePicture;
 import com.huishouwu.pojo.TypeConfigSimple;
 
 @Controller
@@ -30,6 +35,9 @@ public class MainController {
 	}
 
 	@Resource
+	private ContentDao contentDao;
+	
+	@Resource
 	private OrderDao orderDao; 
 	
 	@Resource
@@ -40,12 +48,15 @@ public class MainController {
 	
 	@RequestMapping("index")
 	public String index(Model m,HttpServletRequest req) {
-		String root=req.getServletContext().getRealPath("/");
-		String realpath=root+"uploads/slideshow/";
-		File f=new File(realpath);
-		String [] files=f.list();
+//		String root=req.getServletContext().getRealPath("/");
+//		String realpath=root+"uploads/slideshow/";
+//		File f=new File(realpath);
+//		String [] files=f.list();
+		List<HomePicture> files=contentDao.getPicture(1);
 		m.addAttribute("title", "首页");
 		m.addAttribute("files", files);
+		
+		m.addAttribute("news", newsDao.getAllNews(1));
 		return "index";
 	}
 
@@ -82,4 +93,18 @@ public class MainController {
 		m.addAttribute("news", newsDao.getAllNews(1));
 				return "news";
 	}
+	
+	@RequestMapping("alert")
+	@ResponseBody
+	public String alert(@RequestParam String des,HttpServletRequest req){
+		try {
+			des=new String(des.getBytes("iso-8859-1"),"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String ss="<script>alert('"+des+"')</script>";
+		return ss;
+	}
+	
 }

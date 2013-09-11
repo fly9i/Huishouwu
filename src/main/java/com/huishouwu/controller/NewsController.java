@@ -1,12 +1,10 @@
 package com.huishouwu.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.huishouwu.dao.NewsDao;
 import com.huishouwu.pojo.News;
+import com.huishouwu.pojo.User;
 
 @Controller
 public class NewsController {
@@ -30,10 +29,7 @@ public class NewsController {
 		return "{code:200,des:'文章添加成功'}";
 	}
 	
-	@RequestMapping("news/admin")
-	public String news(){
-		return "newsadmin";
-	}
+	
 	@RequestMapping("news/{id}")
 	public String getNewsById(@PathVariable int id,Model m){
 

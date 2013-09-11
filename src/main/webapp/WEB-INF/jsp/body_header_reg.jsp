@@ -28,7 +28,7 @@
 				<div class="controls">
 					<select name="role" id="role">
 						<option value="1">普通用户</option>
-						<option value="2">回收商</option>
+						<option value="0">回收商</option>
 					</select>
 				</div>
 			</div>

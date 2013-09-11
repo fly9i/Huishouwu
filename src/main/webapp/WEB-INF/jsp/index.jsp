@@ -27,22 +27,31 @@ $(function(){
 </head>
 <%@ include file="body_header.jsp"%>
 
-<div class="span7"
-	style="height: 500px;">
+<div class="span7">
 	<div id="slides" class="flexslider"
 		style="width: 530px; height: 300px; padding-left: 0px; margin-left: 0px;">
 		<!-- Place somewhere in the <body> of your page -->
 		<ul class="slides">
 		<c:forEach var="img" items="${files }">
-			<li><img src="${mainpath}/uploads/slideshow/${img}" style="width:100%;height:300px;"/></li>
+			<li><img src="${mainpath}/uploads/slideshow/${img.getName()}" style="width:100%;height:300px;"/></li>
 		</c:forEach>
 		</ul>
 	</div>
 </div>
-<div class="span5" style="height: 500px; ">
 
-<div class="pull-right">
-<a href="news">&gt;&gt;更多</a>
+<div class="span5">
+<h5>新闻</h5>
+<div>
+<ul class="" style="list-style-type:none;">
+<c:forEach var="n" items="${news}">
+<li style="margin:5px;"><a href="${mainpath}/news/${n.getId()}">
+
+${n.getTitle() }
+</a></li>
+</c:forEach>
+<li class="pull-right"><a href="news">&gt;&gt;更多</a></li>
+</ul>
+
 </div>
 </div>
 <%@ include file="body_footer.jsp"%>

@@ -17,9 +17,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest req,
 			HttpServletResponse res, Object handler)
 			throws Exception {
-		res.setCharacterEncoding("utf8");
-		req.setCharacterEncoding("utf8");
-		System.out.println("into interceptor");
 		String [] filters=new String []{"/cmsmg"};
 		String uriString=req.getRequestURI();
 		boolean beFilter=false;

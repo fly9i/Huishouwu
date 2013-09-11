@@ -8,7 +8,7 @@
 				<ul id="nav-bar" class="nav nav-tabs" style="margin-bottom: 0px;">
 					<li id="index"><a href="${mainpath }/">首页</a></li>
 					<li id="sale_old"><a href="${mainpath }/old">我要卖旧货</a></li>
-					<li id="market"><a href="${mainpath }/market">积分换礼</a></li>
+					<!-- <li id="market"><a href="${mainpath }/market">积分换礼</a></li> -->
 					<li id="news"><a href="${mainpath }/news">新闻资讯</a></li>
 					<li id="cart"><a href="${mainpath }/cart">回收车</a></li>
 				</ul>

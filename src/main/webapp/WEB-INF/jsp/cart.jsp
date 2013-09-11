@@ -10,6 +10,7 @@
 <script type="text/javascript" src="js/cart.js"></script>
 </head>
 <%@ include file="body_header.jsp"%>
+
 <c:choose>
 	<c:when test="${cart!=null && !cart.isEmpty() }">
 		<div class="span11" style="padding: 10px;">
@@ -43,10 +44,11 @@
 	</c:when>
 	<c:otherwise>
 		<div class="span11" style="height: 50px; text-align: center;">
-			空的回收车！<a href="home">返回首页</a>
+			空的回收车！<a href="${mainpath}">返回首页</a>
 		</div>
 
 	</c:otherwise>
 </c:choose>
+
 <%@ include file="body_footer.jsp"%>
 </html>
