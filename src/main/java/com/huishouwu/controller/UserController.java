@@ -70,6 +70,56 @@ public class UserController {
 		return "{code:200,message:'退出成功。'}";
 	}
 
+	private boolean isDupUname(String u) {
+		boolean isDup = false;
+		List<User> list = userDao.dupUname(u);
+		if (list != null && !list.isEmpty()) {
+			isDup = true;
+		}
+		return isDup;
+	}
+
+	private boolean isDupEmail(String u) {
+		boolean isDup = false;
+		List<User> list = userDao.dupEmail(u);
+		if (list != null && !list.isEmpty()) {
+			isDup = true;
+		}
+		return isDup;
+	}
+
+	private boolean isDupMobile(String u) {
+		boolean isDup = false;
+		List<User> list = userDao.dupMobile(u);
+		if (list != null && !list.isEmpty()) {
+			isDup = true;
+		}
+		return isDup;
+	}
+
+	@RequestMapping("/check")
+	@ResponseBody
+	public String checkUser(@RequestParam String val, @RequestParam String type) {
+		String msg = "";
+		int code = 400;
+		boolean isDup = false;
+		if (type.equals("un")) {
+			isDup = isDupUname(val);
+		} else if (type.equals("em")) {
+			isDup = isDupEmail(val);
+		} else if (type.equals("mb")) {
+			isDup = isDupMobile(val);
+		}
+		
+		if (!isDup) {
+			code = 200;
+			msg = "ok";
+		} else {
+			msg = "dup";
+		}
+		return "{code:" + code + ",msg:'"+msg+"'}";
+	}
+
 	@RequestMapping("/add")
 	@ResponseBody
 	public String addUser(@RequestParam("username") String name,
@@ -89,7 +139,7 @@ public class UserController {
 			} else {
 				user.setRole(1);
 			}
-		}else{
+		} else {
 			user.setRole(1);
 		}
 
@@ -105,32 +155,40 @@ public class UserController {
 		user.setCreate_at(new Date());
 		user.setUpdate_at(new Date());
 		user.setUserid(Utils.md5(user.getName() + "_" + user.getEmail() + "_"
-				+ user.getMobile()+"_"+new Date().getTime()));
+				+ user.getMobile() + "_" + new Date().getTime()));
 
-		try {
-			user.setLast_login(DateUtils.parseDate("2000-01-01 00:00:00",
-					"yyyy-MM-dd HH:mm:ss"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			logger.error("Format string to last login time err.", e);
-		}
-		int result = 0;
-		int code = 0;
-		String msg = "";
-		try {
-			result = this.userDao.addUser(user);
-			msg = "添加用户成功。";
-		} catch (Exception e) {
-			logger.error("User register err.", e);
-			msg = e.getMessage();
-		}
+		boolean isDupUname = isDupUname(user.getName());
+		boolean isDupEmail = isDupEmail(user.getEmail());
+		boolean isDupMobile = isDupMobile(user.getMobile());
+		if (isDupUname || isDupEmail || isDupMobile) {
+			return "{code:201,message:' 重复的用户名/邮箱/手机号/'}";
+		} else {
 
-		if (result == 1) {
-			code = 200;
-			if (u == null) {
-				req.getSession().setAttribute("user", user);
+			try {
+				user.setLast_login(DateUtils.parseDate("2000-01-01 00:00:00",
+						"yyyy-MM-dd HH:mm:ss"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				logger.error("Format string to last login time err.", e);
 			}
+			int result = 0;
+			int code = 0;
+			String msg = "";
+			try {
+				result = this.userDao.addUser(user);
+				msg = "添加用户成功。";
+			} catch (Exception e) {
+				logger.error("User register err.", e);
+				msg = e.getMessage();
+			}
+
+			if (result == 1) {
+				code = 200;
+				if (u == null) {
+					req.getSession().setAttribute("user", user);
+				}
+			}
+			return "{code:" + code + ",message:'" + msg + "'}";
 		}
-		return "{code:" + code + ",message:'" + msg + "'}";
 	}
 }

@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
 <title>${title}&nbsp;-&nbsp;${tip}</title>
+<script type="text/javascript">var hsw_conf={};hsw_conf.path="${mainpath}"</script>
 <script type="text/javascript" src="${mainpath}/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="${mainpath}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${mainpath}/js/main.js"></script>

@@ -75,6 +75,58 @@ public class UserDao {
 			}
 		});
 	}
+	
+	public List<User> dupUname(final String u){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "select * from users where name=?";
+		return this.jdbcTemplate.query(new PreparedStatementCreator() {
+
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				// TODO Auto-generated method stub
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setObject(1, u);
+				return ps;
+			}
+			
+		}, new BeanPropertyRowMapper<User>(User.class) );
+	}
+	
+	public List<User> dupEmail(final String u){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "select * from users where email=?";
+		return this.jdbcTemplate.query(new PreparedStatementCreator() {
+
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				// TODO Auto-generated method stub
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setObject(1, u);
+				return ps;
+			}
+			
+		}, new BeanPropertyRowMapper<User>(User.class) );
+	}
+	
+	public List<User> dupMobile(final String u){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "select * from users where mobile=?";
+		return this.jdbcTemplate.query(new PreparedStatementCreator() {
+
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				// TODO Auto-generated method stub
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setObject(1, u);
+				return ps;
+			}
+			
+		}, new BeanPropertyRowMapper<User>(User.class) );
+	}
+	//or email=? or mobile=?
 
 	public List<User> checkUser(final String name, final String pass) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);

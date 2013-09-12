@@ -1,12 +1,86 @@
+function addCheckMethod() {
+	$.validator.addMethod("checkuser", function(value, element) {
+		var result = false;
+		$.ajax({
+			type : "GET",
+			url : hsw_conf.path + "/user/check",
+			async : false,
+			data : {
+				val : value,
+				type : 'un'
+			},
+			success : function(res) {
+				res = eval("(" + res + ")");
+				if (res.code == 200) {
+					result = true;
+				} else {
+					result = false;
+				}
+			}
+		});
+		return result;
+	}, "用户名已被使用");
+
+	$.validator.addMethod("checkmobile", function(value, element) {
+		var result = false;
+		$.ajax({
+			type : "GET",
+			url : hsw_conf.path + "/user/check",
+			data : {
+				val : value,
+				type : 'mb'
+			},
+			async : false,
+			success : function(res) {
+				res = eval("(" + res + ")");
+				if (res.code == 200) {
+					result = true;
+				} else {
+					result = false;
+				}
+			}
+		});
+		return result;
+	}, "电话号码已被使用");
+
+	$.validator.addMethod("checkemail", function(value, element) {
+		var result = false;
+		$.ajax({
+			type : "GET",
+			url : hsw_conf.path + "/user/check",
+			data : {
+				val : value,
+				type : 'em'
+			},
+			async : false,
+			success : function(res) {
+				res = eval("(" + res + ")");
+				if (res.code == 200) {
+					result = true;
+				} else {
+					result = false;
+				}
+			}
+		});
+		return result;
+	}, "邮件地址已被使用");
+}
 
 $(document).ready(function() {
+	addCheckMethod();
+	$("#form_register").validateSetup({
+		onChange : false,
+		onKeyup : false,
+		onBlue : true
+	});
 
 	$("#form_register").validate({
+
 		submitHandler : function() {
 			$.ajax({
 				type : "POST",
 				async : true,
-				url : "/web/user/add",
+				url : hsw_conf.path + "/user/add",
 				data : $('#form_register').serialize(),
 				success : function(res) {
 					res = eval("(" + res + ")");
@@ -34,7 +108,7 @@ $(document).ready(function() {
 
 	$("#logout").on("click", function() {
 		$.ajax({
-			url : "user/logout",
+			url : hsw_conf.path + "/user/logout",
 			async : true,
 			type : "GET",
 			success : function(res) {
@@ -51,7 +125,7 @@ $(document).ready(function() {
 	$("#login_btn").on("click", function() {
 		$(this).button("loading");
 		$.ajax({
-			url : "./user/login",
+			url : hsw_conf.path + "/user/login",
 			data : $("#form_login").serialize(),
 			type : "POST",
 			async : true,

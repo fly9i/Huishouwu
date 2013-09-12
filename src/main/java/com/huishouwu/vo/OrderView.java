@@ -47,7 +47,7 @@ public class OrderView {
 	}
 	public int getTotal() {
 		for(OrderFeature of:this.getOrderFeatures()){
-			total+=of.getPrice();
+			total+=of.getPrice()*of.getCount();
 		}
 		return total;
 	}

@@ -13,7 +13,7 @@
 <c:choose>
 <c:when test="${user!=null && user.getRole()==2 }">
 <div class="span9">
-<form id="form_register" class="form-horizontal" action="${mainpath}/news/add" method="post">
+<form id="form_news" class="form-horizontal" action="${mainpath}/news/add" method="post">
 	<fieldset>
 		
 		<div class="control-group">

@@ -13,13 +13,13 @@
 				<label class="control-label" for="username">用户名</label>
 				<div class="controls">
 					<input type="text" id="username" name="username" required
-						minLength='3' maxLength='20' placeholder="输入用户名">
+						checkuser='true' minLength='3' maxLength='20' placeholder="输入用户名">
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="email">邮箱</label>
 				<div class="controls">
-					<input type="text" required email='true' id="email" name="email"
+					<input type="text" required checkemail='true' email='true' id="email" name="email"
 						placeholder="输入邮箱">
 				</div>
 			</div>
@@ -27,7 +27,7 @@
 			<div class="control-group">
 				<label class="control-label" for="mobile">手机</label>
 				<div class="controls">
-					<input type="text" id="mobile" name="mobile" required number
+					<input type="text" id="mobile" name="mobile" required checkmobile='true' number='true'
 						placeholder="输入手机号码">
 				</div>
 			</div>
