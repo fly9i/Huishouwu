@@ -68,14 +68,10 @@ function addCheckMethod() {
 
 $(document).ready(function() {
 	addCheckMethod();
-	$("#form_register").validateSetup({
-		onChange : false,
-		onKeyup : false,
-		onBlue : true
-	});
 
 	$("#form_register").validate({
-
+		onkeyup : false,
+		
 		submitHandler : function() {
 			$.ajax({
 				type : "POST",
