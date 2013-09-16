@@ -1,31 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <div id="main" class="container">
-		<div id="top" class="navbar">
-			<div class="navbar-inner">
-				<div class="container">
-					<a class="brand" href="${mainpath }"> 
-					回收屋&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:12px;">${tip}</span>
-					</a>
-					<ul class="nav pull-right">
-					<li class="dropdown">
-							<c:choose >
+	<div id="top" class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="${mainpath }">
+					回收屋&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px;">${tip}</span>
+				</a>
+				<ul class="nav pull-right">
+
+					<li class="dropdown"><c:choose>
 							<c:when test="${sessionScope.user!=null}">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-								${sessionScope.user.getName()}
-								<b class="caret"></b>
+								<a class="dropdown-toggle" data-toggle="dropdown"
+									href="javascript:;"> ${sessionScope.user.getName()} <b
+									class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
-								<li>
-								<a href="#">我的小屋</a>
-								</li>
-								<li>
-								<a href="#">我要回收</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-								<a href="javascript:;" id="logout">退出</a>
-								</li>
+									<li><a href="#">我的小屋</a></li>
+									<li><a href="#">我要回收</a></li>
+									<li class="divider"></li>
+									<li><a href="javascript:;" id="logout">退出</a></li>
 								</ul>
 							</c:when>
 							<c:otherwise>
@@ -34,16 +28,17 @@
 										class="span2" placeholder="用户名/邮箱/手机" /> <input
 										id="login_password" name="login_password" type="password"
 										class="span2" placeholder="密码" /> <input type="button"
-										id="login_btn" value="登录" class="btn"  data-loading-text="登录中..." />
+										id="login_btn" value="登录" class="btn"
+										data-loading-text="登录中..." />
 								</form>
 							</c:otherwise>
-							</c:choose>
-						</li>
-						<li>&nbsp; <input type="button" id="reg" class="btn"
-							value="注册" href="#">
-						</li>
-					</ul>
-				</div>
+						</c:choose></li>
+					<li>&nbsp; <input type="button" id="reg" class="btn"
+						value="注册" href="#">
+					</li>
+					<li><a href="${mainpath}/cart"><span class="label  label-info">回收车</span></a></li>
+				</ul>
 			</div>
 		</div>
-		<div class="row">
+	</div>
+	<div class="row">

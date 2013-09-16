@@ -10,13 +10,13 @@
 <div class="span9">
 <form id="form-upload" method="post" action="./upimg" enctype="multipart/form-data">
 	<div class="control-group">
-			<label class="control-label" for="title">上传图片</label>
+			<label class="control-label" for="file">上传图片</label>
 			<div class="controls">
-				<input type="file" name="file" placeholder="选择上传的图片"/>
+				<input type="file" name="file" id="file" placeholder="选择上传的图片"/>
 			</div>
 	</div>
 	<div class="controls">
-		<a class="btn btn-primary" id="upload_pic">上传</a>
+		<a class="btn btn-primary" id="upload_pic" >上传</a>
 	</div>
 </form>
 <div>

@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.huishouwu.dao.ConfigDao;
+import com.huishouwu.dao.ContentDao;
 import com.huishouwu.pojo.TypeConfig;
 import com.huishouwu.pojo.TypeConfigSimple;
 
@@ -21,6 +22,8 @@ public class ConfigHandler {
 	@Autowired
 	private ConfigDao configDao;
 	
+	@Autowired
+	private ContentDao contentDao;
 	
 	
 	@Cacheable(value="typeconfig",key="#id+'typeid'")
@@ -50,4 +53,9 @@ public class ConfigHandler {
 		return configDao.getAllConfig();
 	}
 
+	@Cacheable("contentconfig")
+	public Map<String,String> getSysConfig(){
+		return contentDao.getSysConfig();
+	}
+	
 }

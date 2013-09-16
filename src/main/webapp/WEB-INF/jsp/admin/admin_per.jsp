@@ -12,12 +12,8 @@
 <c:when test="${user!=null && user.getRole()==2 }">
 <div class="span2">
 <ul id="admin_list" class="nav nav-list">
-  <li class="nav-header">内容管理</li>
-  <li class="active"><a href="javascript:;" class="adminnav" link="${mainpath}/admin/config">配置设置</a></li>
-  <li><a href="#" class="adminnav" link="${mainpath}/admin/user">添加用户</a></li>
-  <li><a href="#" class="adminnav" link="${mainpath}/admin/pic">首页图片</a></li>
-  <li><a href="#" class="adminnav" link="${mainpath}/admin/order">订单管理</a></li>
-  <li><a href="#" class="adminnav" link="${mainpath}/admin/news">新闻发布</a></li>
+  <li class="nav-header">订单检索</li>
+  <li class="active"><a href="#" class="adminnav" link="${mainpath}/admin/user">订单管理</a></li>
 </ul>
 </div>
 <div class="span10">

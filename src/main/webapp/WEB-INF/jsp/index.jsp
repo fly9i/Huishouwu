@@ -37,6 +37,9 @@ $(function(){
 		</c:forEach>
 		</ul>
 	</div>
+	<div style="text-align:center;">
+	
+	</div>
 </div>
 
 <div class="span5">
@@ -54,6 +57,7 @@ ${n.getTitle() }
 
 </div>
 </div>
+
 <%@ include file="body_footer.jsp"%>
 </html>
 

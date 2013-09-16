@@ -2,9 +2,12 @@ package com.huishouwu.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.huishouwu.pojo.HomePicture;
@@ -79,5 +83,43 @@ public class ContentDao {
 			}
 		});
 	}
+	
+	public Map<String,String> getSysConfig(){
+		String sql="select type,value from hsw_buss.sys_config";
+		List<String[]> list=this.jdbcTemplate.query(sql, new RowMapper<String[]>(){
 
+			@Override
+			public String[] mapRow(ResultSet rs, int rowNum)
+					throws SQLException {
+				String [] res=new String[2];
+				res[0]=rs.getString("type");
+				res[1]=rs.getString("value");
+				return res;
+			}
+			
+		});
+		Map<String,String> map=new HashMap<String,String>();
+		for(String [] typeEntry:list){
+			map.put(typeEntry[0], typeEntry[1]);
+		}
+		
+		return map;
+		
+	}
+
+	public int updateSysConfig(final String value,final String type){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql="update hsw_buss.sys_config set value=? where type=?";
+		return this.jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setString(1, value);
+				ps.setString(2, type);
+				return ps;
+			}
+		});
+	}
 }

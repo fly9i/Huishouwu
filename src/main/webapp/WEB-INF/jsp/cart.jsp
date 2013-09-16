@@ -4,13 +4,10 @@
 <html>
 <head>
 <%@ include file="header.jsp"%>
-<script type="text/javascript">
-	var tab = "cart";
-</script>
+
 <script type="text/javascript" src="js/cart.js"></script>
 </head>
-<%@ include file="body_header.jsp"%>
-
+	<%@ include file="body_header.jsp" %>
 <c:choose>
 	<c:when test="${cart!=null && !cart.isEmpty() }">
 		<div class="span11" style="padding: 10px;">
