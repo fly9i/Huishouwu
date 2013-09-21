@@ -85,6 +85,7 @@ public class ContentDao {
 	}
 	
 	public Map<String,String> getSysConfig(){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
 		String sql="select type,value from hsw_buss.sys_config";
 		List<String[]> list=this.jdbcTemplate.query(sql, new RowMapper<String[]>(){
 

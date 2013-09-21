@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +23,7 @@ import com.huishouwu.dao.OrderDao;
 import com.huishouwu.pojo.Order;
 import com.huishouwu.pojo.TypeConfig;
 import com.huishouwu.pojo.User;
+import com.huishouwu.util.SystemFinal;
 import com.huishouwu.util.Utils;
 import com.huishouwu.vo.CartItem;
 import com.huishouwu.vo.OrderView;
@@ -194,7 +194,7 @@ public class OrderController {
 	@RequestMapping("order")
 	public String order(Model m,HttpServletRequest req,@RequestParam(defaultValue="fd") String tp){
 		/**
-		 * tp 参数表示查找订单类型，fd则为所有合适的，mg则表示管理自身的
+		 * tp 参数表示查找订单类型，fd则为所有符合条件的，mg则表示管理自身的
 		 */
 		User u=(User)req.getSession().getAttribute("users");
 		m.addAttribute("user", u);
@@ -226,7 +226,7 @@ public class OrderController {
 		if (u == null || u.getRole() !=0) {
 			return "<script type='text/javascript'>alert('只有回收商可以进行接单');window.location.href='../'</script>";
 		}
-		orderDao.changeOrder(orderids, u.getUserid(),OrderConfig.ORDER_ACCEPTED);
+		orderDao.changeOrder(orderids, u.getUserid(),SystemFinal.ORDER_ACCEPTED);
 		return "<script type='text/javascript'>alert('接单成功');window.location.href='../home'</script>";
 	}
 	
@@ -238,7 +238,7 @@ public class OrderController {
 		if (u == null || (u.getRole() != 1 && u.getRole()!=0)) {
 			return "<script type='text/javascript'>alert('你无法进行结束订单操作。');window.location.href='../'</script>";
 		}
-		orderDao.changeOrder(orderids, u.getUserid(),OrderConfig.ORDER_FINISH);
+		orderDao.changeOrder(orderids, u.getUserid(),SystemFinal.ORDER_FINISH);
 		return "<script type='text/javascript'>alert('结束订单成功');window.location.href='../'</script>";
 	}
 	

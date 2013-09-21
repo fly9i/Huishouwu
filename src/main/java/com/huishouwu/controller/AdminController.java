@@ -245,11 +245,24 @@ public class AdminController {
 			HttpServletRequest req) {
 		User u = (User) req.getSession().getAttribute("user");
 		m.addAttribute("user", u);
-		if (u == null || u.getRole() == 2) {
+		if (u == null || u.getRole() != 2) {
 						return "{code:400,des:'请以管理员身份登录'}";
 		}
 
 		contentDao.updateSysConfig(tip, "tip");
+		return "{code:200,des:'ok'}";
+	}
+	
+	@RequestMapping("/collector")
+	@ResponseBody
+	public String checkCollector(Model m, HttpServletRequest req){
+		User u = (User) req.getSession().getAttribute("user");
+		m.addAttribute("user", u);
+		if (u == null || u.getRole() != 2) {
+						return "{code:400,des:'请以管理员身份登录'}";
+		}
+
+		
 		return "{code:200,des:'ok'}";
 	}
 

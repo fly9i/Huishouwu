@@ -145,9 +145,35 @@ public class UserDao {
 			}
 		}, new BeanPropertyRowMapper<User>(User.class));
 	}
-	// insert into users
-	// (name,pass,email,sign_way,mobile,role,address,create_at,update_at,last_login)
-	// values
-	// ('test1','test2','fly9i@163.com','web','18611733724',0,'北京霍营龙锦东四',current_timestamp(),current_timestamp(),current_timestamp());
-
+	
+	public List<User> getCollectorByType(final int role){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql="select * from hsw_user_center.users where role=?";
+		return this.jdbcTemplate.query(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setInt(1, role);
+				return ps;
+			}
+		}, new BeanPropertyRowMapper<User>(User.class));
+	}
+	
+	public int changeCollector(final int role,final String userid){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql="update hsw_user_center.users set role=? where userid=?";
+		return this.jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setInt(1, role);
+				ps.setString(1, userid);
+				return ps;
+			}
+		});
+	}
 }
