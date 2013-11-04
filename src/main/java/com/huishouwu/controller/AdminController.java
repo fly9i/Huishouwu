@@ -149,7 +149,7 @@ public class AdminController {
 				e.printStackTrace();
 			}
 			return "redirect:../alert?des=" + ss;
-			
+
 		}
 	}
 
@@ -169,7 +169,8 @@ public class AdminController {
 			return "redirect:../alert?des=" + ss;
 		}
 
-		String uploadPath = req.getServletContext().getRealPath("/")
+		String uploadPath = req.getSession().getServletContext()
+				.getRealPath("/")
 				+ "uploads/slideshow/";
 		String fileName = file.getOriginalFilename();
 		String[] names = fileName.split("\\.");
@@ -246,23 +247,22 @@ public class AdminController {
 		User u = (User) req.getSession().getAttribute("user");
 		m.addAttribute("user", u);
 		if (u == null || u.getRole() != 2) {
-						return "{code:400,des:'请以管理员身份登录'}";
+			return "{code:400,des:'请以管理员身份登录'}";
 		}
 
 		contentDao.updateSysConfig(tip, "tip");
 		return "{code:200,des:'ok'}";
 	}
-	
+
 	@RequestMapping("/collector")
 	@ResponseBody
-	public String checkCollector(Model m, HttpServletRequest req){
+	public String checkCollector(Model m, HttpServletRequest req) {
 		User u = (User) req.getSession().getAttribute("user");
 		m.addAttribute("user", u);
 		if (u == null || u.getRole() != 2) {
-						return "{code:400,des:'请以管理员身份登录'}";
+			return "{code:400,des:'请以管理员身份登录'}";
 		}
 
-		
 		return "{code:200,des:'ok'}";
 	}
 
