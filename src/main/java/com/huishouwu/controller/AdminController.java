@@ -136,7 +136,11 @@ public class AdminController {
 
 		User u = (User) req.getSession().getAttribute("user");
 		m.addAttribute("user", u);
-		if (u == null || u.getRole() == 2) {
+		if (u != null && u.getRole() == 2) {
+			int delId = Integer.parseInt(id);
+			contentDao.deletePic(delId);
+			return "{code:200,desc:'删除成功'}";
+		} else {
 			String ss = "请以管理员身份登录";
 			try {
 				ss = URLEncoder.encode(ss, "UTF-8");
@@ -145,11 +149,7 @@ public class AdminController {
 				e.printStackTrace();
 			}
 			return "redirect:../alert?des=" + ss;
-		} else {
-
-			int delId = Integer.parseInt(id);
-			contentDao.deletePic(delId);
-			return "{code:200,desc:'删除成功'}";
+			
 		}
 	}
 
@@ -158,7 +158,7 @@ public class AdminController {
 			HttpServletRequest req, Model m) {
 		User u = (User) req.getSession().getAttribute("user");
 		m.addAttribute("user", u);
-		if (u == null || u.getRole() == 2) {
+		if (u == null || u.getRole() != 2) {
 			String ss = "请以管理员身份登录";
 			try {
 				ss = URLEncoder.encode(ss, "UTF-8");

@@ -73,12 +73,14 @@ $(document).ready(function() {
 		onkeyup : false,
 		
 		submitHandler : function() {
+			$("#reg_button").button("loading");
 			$.ajax({
 				type : "POST",
 				async : true,
 				url : hsw_conf.path + "/user/add",
 				data : $('#form_register').serialize(),
 				success : function(res) {
+					$("#reg_button").button("reset");
 					res = eval("(" + res + ")");
 					alert(res.message);
 					if (res.code == 200) {

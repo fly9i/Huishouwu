@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div class="controls">
-				<input type="submit" class="btn" id="reg_button" value="注册" />
+				<input type="submit" class="btn" id="reg_button" value="注册" data-loading-text="注册中..."/>
 			</div>
 		</fieldset>
 	</form>

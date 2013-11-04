@@ -46,7 +46,7 @@ public class MainController {
 	@Resource
 	private NewsDao newsDao;
 	
-	@RequestMapping("index")
+	@RequestMapping("home")
 	public String index(Model m,HttpServletRequest req) {
 //		String root=req.getServletContext().getRealPath("/");
 //		String realpath=root+"uploads/slideshow/";

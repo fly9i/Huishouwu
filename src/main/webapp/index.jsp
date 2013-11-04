@@ -1,7 +1,7 @@
 <html>
 <body>
 <script type="text/javascript">
-window.location.href="index";
+window.location.href="home";
 </script>
 </body>
 </html>
