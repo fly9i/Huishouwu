@@ -171,7 +171,7 @@ public class AdminController {
 
 		String uploadPath = req.getSession().getServletContext()
 				.getRealPath("/")
-				+ "uploads/slideshow/";
+				+ "/uploads/slideshow/";
 		String fileName = file.getOriginalFilename();
 		String[] names = fileName.split("\\.");
 		String ext = names[names.length - 1];
@@ -263,6 +263,19 @@ public class AdminController {
 			return "{code:400,des:'请以管理员身份登录'}";
 		}
 
+		return "{code:200,des:'ok'}";
+	}
+	
+	@RequestMapping("/clearpiccache")
+	@ResponseBody
+	public String clearPicCache(Model m,HttpServletRequest req){
+		User u = (User) req.getSession().getAttribute("user");
+		m.addAttribute("user", u);
+		if (u == null || u.getRole() != 2) {
+			return "{code:400,des:'请以管理员身份登录'}";
+		}else{
+			configHandler.clearAllHomePic();
+		}
 		return "{code:200,des:'ok'}";
 	}
 

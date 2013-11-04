@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.huishouwu.dao.ConfigDao;
 import com.huishouwu.dao.ContentDao;
+import com.huishouwu.pojo.HomePicture;
 import com.huishouwu.pojo.TypeConfig;
 import com.huishouwu.pojo.TypeConfigSimple;
 
@@ -58,4 +59,12 @@ public class ConfigHandler {
 		return contentDao.getSysConfig();
 	}
 	
+	@Cacheable("homepic")
+	public List<HomePicture> getHomepics(){
+		return contentDao.getPicture(1);
+	}
+	@CacheEvict(value="homepic",allEntries=true)
+	public void clearAllHomePic(){
+		logger.debug("Clear all home pic cache from cache.");
+	}
 }

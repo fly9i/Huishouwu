@@ -15,8 +15,11 @@
 				<input type="file" name="file" id="file" placeholder="选择上传的图片"/>
 			</div>
 	</div>
+	<div class="control-group">
 	<div class="controls">
 		<a class="btn btn-primary" id="upload_pic" >上传</a>
+		<a class="btn btn-warn" id="clear_pic_cache" data-loading-text="重载缓存...">重载首页图片</a>
+	</div>
 	</div>
 </form>
 <div>

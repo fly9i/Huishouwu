@@ -23,6 +23,7 @@ $(function(){
 	});
 });
 </script>
+<script type="text/javascript" src="${mainpath }/js/news.js"></script>
 <link rel='stylesheet' href="${mainpath}/css/flexslider.css" />
 </head>
 <%@ include file="body_header.jsp"%>
@@ -45,16 +46,14 @@ $(function(){
 <div class="span5">
 <h5>新闻</h5>
 <div>
-<ul class="" style="list-style-type:none;">
-<c:forEach var="n" items="${news}">
-<li style="margin:5px;"><a href="${mainpath}/news/${n.getId()}">
+<ul class="news_show" style="list-style-type:none;">
 
-${n.getTitle() }
-</a></li>
-</c:forEach>
+<li id="news_title" style="margin:5px;">
+正在加载新闻...
+</li>
+
 <li class="pull-right"><a href="news">&gt;&gt;更多</a></li>
 </ul>
-
 </div>
 </div>
 

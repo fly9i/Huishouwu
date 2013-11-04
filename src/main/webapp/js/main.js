@@ -140,7 +140,11 @@ $(document).ready(function() {
 			})($(this))
 		});
 	});
-
+	$("#login_password").on("keydown",function(e){
+		if(e.which==13 && $(this).val()){
+			$("#login_btn").click();
+		}
+	});
 });
 
 $.fn.changeDiv = function() {

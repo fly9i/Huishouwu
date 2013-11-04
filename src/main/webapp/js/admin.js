@@ -4,4 +4,5 @@ $(function(){
 		$(this).parent().addClass("active");
 		$("#admin_frame").attr({src:$(this).attr("link")});
 	});
+
 });

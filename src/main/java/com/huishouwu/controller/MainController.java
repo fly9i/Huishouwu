@@ -52,11 +52,11 @@ public class MainController {
 //		String realpath=root+"uploads/slideshow/";
 //		File f=new File(realpath);
 //		String [] files=f.list();
-		List<HomePicture> files=contentDao.getPicture(1);
+		List<HomePicture> files=configHandler.getHomepics();
 		m.addAttribute("title", "首页");
 		m.addAttribute("files", files);
 		
-		m.addAttribute("news", newsDao.getAllNews(1));
+//		m.addAttribute("news", newsDao.getAllNews(1));
 		return "index";
 	}
 
@@ -92,6 +92,12 @@ public class MainController {
 	public String news(Model m) {
 		m.addAttribute("news", newsDao.getAllNews(1));
 				return "news";
+	}
+	
+	@RequestMapping("aboutus")
+	public String aboutus(Model m){
+		m.addAttribute("title", "关于我们");
+		return "aboutus";
 	}
 	
 	@RequestMapping("alert")
