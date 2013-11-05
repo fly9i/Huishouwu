@@ -5,7 +5,7 @@
 			style="position: absolute; border: 0px; right: 20px; top: 20px; width: 25px; height: 25px; cursor: pointer;"
 			id="close" />
 	</div>
-<div id="form_reg">
+<div id="form_reg" class="pop">
 	<form id="form_register" class="well form-horizontal">
 		<fieldset>
 			<legend>用户注册</legend>
@@ -51,4 +51,9 @@
 			</div>
 		</fieldset>
 	</form>
+</div>
+
+<div id="apply_des" class="pop">
+	<iframe src="${mainpath}/desc" frameborder=0 style="border:0px;margin:0px;padding:0px;width:100%;height:100%;">
+	</iframe>
 </div>

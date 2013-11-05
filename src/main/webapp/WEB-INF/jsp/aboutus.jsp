@@ -4,10 +4,11 @@
 <html>
 <head>
 <%@ include file="header.jsp" %>
-
+<script type="text/javascript">
+	var tab="aboutus";
+</script>
 </head>
-<%@ include file="body_header_reg.jsp"%>
-<%@ include file="body_top.jsp"%>
+<%@ include file="body_header.jsp" %>
 <div class="span12">
 <div style="text-align:center;"><h3 class="h_title">&nbsp;&nbsp;&nbsp;&nbsp;关于我们</h3></div>
 <div style="text-align:left;">

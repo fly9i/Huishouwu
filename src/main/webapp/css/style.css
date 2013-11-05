@@ -29,8 +29,6 @@
 
 #form_reg {
 	position: fixed;
-	display: none;
-	z-index: 65537;
 	width: 500px;
 	height: 400px;
 	left: 50%;
@@ -38,7 +36,20 @@
 	top: 50px;
 	padding: 10px;
 }
-
+.pop{
+	display: none;
+	z-index: 65537;
+}
+#apply_des{
+	position: fixed;
+	width: 800px;
+	height: 80%;
+	left: 50%;
+	margin-left: -400px;
+	top: 50px;
+	padding: 10px;
+	background-color: white;
+}
 label.error {
 	color: red;
 }

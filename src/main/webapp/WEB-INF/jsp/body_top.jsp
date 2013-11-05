@@ -34,8 +34,9 @@
 							</c:otherwise>
 						</c:choose></li>
 					<li>&nbsp; <input type="button" id="reg" class="btn"
-						value="注册" href="#">
+						value="注册">
 					</li>
+					<li>&nbsp;<input type="button" id="apply" class="btn  btn-primary" value="申请成为注册商"/></li>
 					<li><a href="${mainpath}/cart"><span class="label  label-info">回收车</span></a></li>
 				</ul>
 			</div>

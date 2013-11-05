@@ -95,7 +95,7 @@ $(document).ready(function() {
 	}
 	var close = function() {
 		$("#cover").hide();
-		$("#form_reg").hide();
+		$(".pop").hide();
 	};
 	$("#close").on("click", close);
 
@@ -144,6 +144,10 @@ $(document).ready(function() {
 		if(e.which==13 && $(this).val()){
 			$("#login_btn").click();
 		}
+	});
+	$("#apply").click(function(){
+		$("#cover").show();
+		$("#apply_des").show();
 	});
 });
 

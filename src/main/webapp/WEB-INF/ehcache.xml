@@ -4,10 +4,10 @@
     monitoring="autodetect">  
       
     <defaultCache
-            maxElementsInMemory="500"
+            maxElementsInMemory="0"
             eternal="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="60"
+            timeToLiveSeconds="3600"
             overflowToDisk="false"
             maxElementsOnDisk="0"
             diskPersistent="false"
@@ -15,10 +15,10 @@
             memoryStoreEvictionPolicy="LRU"
             />
     <cache name="typeconfig"
-            maxElementsInMemory="1800000"
+            maxElementsInMemory="0"
             eternal="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="300"
+            timeToLiveSeconds="3600"
             overflowToDisk="false"
             maxElementsOnDisk="0"
             diskPersistent="false"
@@ -26,10 +26,10 @@
             memoryStoreEvictionPolicy="LRU">
     </cache>
      <cache name="typeconfigname"
-            maxElementsInMemory="1800000"
+            maxElementsInMemory="0"
             eternal="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="300"
+            timeToLiveSeconds="3600"
             overflowToDisk="false"
             maxElementsOnDisk="0"
             diskPersistent="false"
@@ -40,7 +40,7 @@
             maxElementsInMemory="1800000"
             eternal="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="300"
+            timeToLiveSeconds="3600"
             overflowToDisk="false"
             maxElementsOnDisk="0"
             diskPersistent="false"
@@ -51,7 +51,7 @@
             maxElementsInMemory="1800000"
             eternal="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="300"
+            timeToLiveSeconds="3600"
             overflowToDisk="false"
             maxElementsOnDisk="0"
             diskPersistent="false"
@@ -59,10 +59,10 @@
             memoryStoreEvictionPolicy="LRU">
     </cache>
     <cache name="contentconfig"
-            maxElementsInMemory="1800000"
+            maxElementsInMemory="0"
             eternal="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="300"
+            timeToLiveSeconds="3600"
             overflowToDisk="false"
             maxElementsOnDisk="0"
             diskPersistent="false"
@@ -71,10 +71,10 @@
     </cache>
     
      <cache name="homepic"
-            maxElementsInMemory="1800000"
+            maxElementsInMemory="0"
             eternal="false"
             timeToIdleSeconds="0"
-            timeToLiveSeconds="300"
+            timeToLiveSeconds="3600"
             overflowToDisk="false"
             maxElementsOnDisk="0"
             diskPersistent="false"

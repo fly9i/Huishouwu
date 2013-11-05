@@ -36,28 +36,37 @@ public class MainController {
 
 	@Resource
 	private ContentDao contentDao;
-	
+
 	@Resource
-	private OrderDao orderDao; 
-	
+	private OrderDao orderDao;
+
 	@Resource
 	private ConfigHandler configHandler;
 
 	@Resource
 	private NewsDao newsDao;
-	
+
 	@RequestMapping("home")
-	public String index(Model m,HttpServletRequest req) {
-//		String root=req.getServletContext().getRealPath("/");
-//		String realpath=root+"uploads/slideshow/";
-//		File f=new File(realpath);
-//		String [] files=f.list();
-		List<HomePicture> files=configHandler.getHomepics();
+	public String index(Model m, HttpServletRequest req) {
+		// String root=req.getServletContext().getRealPath("/");
+		// String realpath=root+"uploads/slideshow/";
+		// File f=new File(realpath);
+		// String [] files=f.list();
+		List<HomePicture> files = configHandler.getHomepics();
 		m.addAttribute("title", "首页");
 		m.addAttribute("files", files);
-		
-//		m.addAttribute("news", newsDao.getAllNews(1));
+
+		// m.addAttribute("news", newsDao.getAllNews(1));
 		return "index";
+	}
+
+	@RequestMapping("desc")
+	public String desc(Model m, HttpServletRequest req) {
+		return "description";
+	}
+	@RequestMapping("reg_collector")
+	public String regCollector(Model m, HttpServletRequest req) {
+		return "reg_collector";
 	}
 
 	@RequestMapping("old")
@@ -91,26 +100,26 @@ public class MainController {
 	@RequestMapping("news")
 	public String news(Model m) {
 		m.addAttribute("news", newsDao.getAllNews(1));
-				return "news";
+		return "news";
 	}
-	
+
 	@RequestMapping("aboutus")
-	public String aboutus(Model m){
+	public String aboutus(Model m) {
 		m.addAttribute("title", "关于我们");
 		return "aboutus";
 	}
-	
+
 	@RequestMapping("alert")
 	@ResponseBody
-	public String alert(@RequestParam String des,HttpServletRequest req){
+	public String alert(@RequestParam String des, HttpServletRequest req) {
 		try {
-			des=new String(des.getBytes("iso-8859-1"),"utf-8");
+			des = new String(des.getBytes("iso-8859-1"), "utf-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String ss="<script>alert('"+des+"')</script>";
+		String ss = "<script>alert('" + des + "')</script>";
 		return ss;
 	}
-	
+
 }
