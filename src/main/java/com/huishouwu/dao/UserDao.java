@@ -2,20 +2,18 @@ package com.huishouwu.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.huishouwu.pojo.User;
@@ -163,7 +161,7 @@ public class UserDao {
 	
 	public int changeCollector(final int role,final String userid){
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		final String sql="update hsw_user_center.users set role=? where userid=?";
+		final String sql="update hsw_user_center.users set role=?,update_at=? where userid=?";
 		return this.jdbcTemplate.update(new PreparedStatementCreator() {
 			
 			@Override
@@ -171,7 +169,25 @@ public class UserDao {
 					throws SQLException {
 				PreparedStatement ps=con.prepareStatement(sql);
 				ps.setInt(1, role);
-				ps.setString(1, userid);
+				ps.setObject(2, new Date());
+				ps.setString(3, userid);
+				return ps;
+			}
+		});
+	}
+	
+	public int updateUserPassword(final String pass,final String userid){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql="update hsw_user_center.users set pass=?,update_at=? where userid=?";
+		return this.jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setString(1, pass);
+				ps.setObject(2, new Date());
+				ps.setString(3, userid);
 				return ps;
 			}
 		});

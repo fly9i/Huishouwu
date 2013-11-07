@@ -24,10 +24,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.huishouwu.buss.ConfigHandler;
 import com.huishouwu.dao.ContentDao;
 import com.huishouwu.dao.OrderDao;
+import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.HomePicture;
 import com.huishouwu.pojo.Order;
 import com.huishouwu.pojo.TypeConfig;
 import com.huishouwu.pojo.User;
+import com.huishouwu.util.SystemFinal;
 import com.huishouwu.vo.OrderView;
 
 @Controller
@@ -38,6 +40,9 @@ public class AdminController {
 	@Resource
 	private OrderDao orderDao;
 
+	@Resource
+	private UserDao userDao;
+	
 	@Resource
 	private ContentDao contentDao;
 
@@ -255,15 +260,15 @@ public class AdminController {
 	}
 
 	@RequestMapping("/collector")
-	@ResponseBody
 	public String checkCollector(Model m, HttpServletRequest req) {
 		User u = (User) req.getSession().getAttribute("user");
 		m.addAttribute("user", u);
 		if (u == null || u.getRole() != 2) {
 			return "{code:400,des:'请以管理员身份登录'}";
 		}
-
-		return "{code:200,des:'ok'}";
+		List<User> nonCollectors=userDao.getCollectorByType(SystemFinal.USER_COLLECTOR_NONACCEPT);
+		m.addAttribute("noncolls", nonCollectors);
+		return "admin/reviewcoll";
 	}
 	
 	@RequestMapping("/clearpiccache")
