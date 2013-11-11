@@ -172,6 +172,14 @@ public class OrderController {
 		req.getSession().setAttribute("cart", cart);
 		return "{result:'ok',code:200,des:''}";
 	}
+	
+//	@RequestMapping("cart/change")
+//	@ResponseBody
+//	public String addOrder(@RequestParam(defaultValue = 1) int count,
+//			@RequestParam(defaultValue = "1") String count,
+//			HttpServletRequest req) {
+//		
+//	}
 
 	private List<CartItem> getCartItems(Map<String, Map<String, Integer>> map,
 			Map<String, TypeConfig> typeConfigMap) {
