@@ -23,9 +23,9 @@ $.fn.genAddr=function(option){
 		method:"GET",
 		async:false,
 		success:function(data){
-			var p=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:1,id:"addr1"});
-			var p2=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:2,id:"addr2"});
-			var p3=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:3,id:"addr3"});
+			var p=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:1,id:"addr1"}).html("<span>城市</span>");
+			var p2=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:2,id:"addr2"}).html("<span>区域</span>");
+			var p3=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:3,id:"addr3"}).html("<span>商圈</span>");
 			for(var i in data){
 				var a=$("<a/>").attr({"id":data[i].selfId,"href":"javascript:;"}).addClass("addr_unselected").html(data[i].name);
 				a.on("click",function(){
@@ -37,7 +37,9 @@ $.fn.genAddr=function(option){
 				
 			}
 			container.append(p);
+			container.append($("<hr/>"));
 			container.append(p2);
+			container.append($("<hr/>"));
 			container.append(p3);
 		}
 	});
@@ -45,12 +47,13 @@ $.fn.genAddr=function(option){
 
 
 function getAddrByParentId(level,pid){
+	var str=(level==1)?"<span>区域</span>":"<span>商圈</span>";
 	$.ajax({
 		url:hsw_conf.path+"/addr/p/"+pid,
 		method:"GET",
 		async:true,
 		success:function(data){
-			var p=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:level,id:"addr"+level});
+			var p=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:level,id:"addr"+level}).html(str);
 			for(var i in data){
 				var a=$("<a/>").attr({"id":data[i].selfId,"href":"javascript:;"}).addClass("addr_unselected").html(data[i].name);
 				a.on("click",function(){
