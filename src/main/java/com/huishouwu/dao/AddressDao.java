@@ -18,7 +18,7 @@ public class AddressDao {
 	private JdbcTemplate jdbcTemplate;
 
 	private DataSource dynamicDataSource;
-	
+
 	private void setDataSource(String dataSource) {
 		CustomerContextHolder.setCustomerType(dataSource);
 		this.jdbcTemplate = new JdbcTemplate(dynamicDataSource);
@@ -29,17 +29,33 @@ public class AddressDao {
 		this.dynamicDataSource = dynamicDataSource;
 	}
 
-	
-	public List<Address> getAddrs(String parentid){
+	public List<Address> getAddrByParentId(String parentid) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql="select * from hsw_buss.Address where parent_id='"+parentid+"' order by name";
-		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(Address.class));
+		String sql = "select * from hsw_buss.Address where parent_id='"
+				+ parentid + "' order by name";
+		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
+				Address.class));
 	}
-	
-	public List<Address> getAllAddrs(){
+
+	public List<Address> getAddrLevel1() {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql="select * from hsw_buss.Address order by name";
-		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(Address.class));
+		String sql = "select * from hsw_buss.Address where level=1 order by name";
+		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
+				Address.class));
 	}
-	
+
+	public List<Address> getAddrLevel0() {
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		String sql = "select * from hsw_buss.Address where level=0 order by name";
+		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
+				Address.class));
+	}
+
+	public List<Address> getAllAddrs() {
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		String sql = "select * from hsw_buss.Address order by name";
+		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
+				Address.class));
+	}
+
 }

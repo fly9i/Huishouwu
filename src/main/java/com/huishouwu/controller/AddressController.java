@@ -23,6 +23,12 @@ public class AddressController {
 	@RequestMapping("/p/{id}")
 	@ResponseBody
 	public List<Address> getAddrs(@PathVariable String id,Model m){
-		return dao.getAddrs(id);
+		return dao.getAddrByParentId(id);
+	}
+	
+	@RequestMapping("/l/1")
+	@ResponseBody
+	public List<Address> getAddrs(Model m){
+		return dao.getAddrLevel1();
 	}
 }

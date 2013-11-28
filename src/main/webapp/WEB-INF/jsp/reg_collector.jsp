@@ -44,6 +44,14 @@
 				<input type="text" id="corpphone" name="corpphone" required minLength='3' maxLength='50' placeholder="联系电话">
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">回收区域选择</label>
+			<div class="controls" id="addr">
+			<script type="text/javascript">
+			$('#addr').genAddr({leve:1});
+			</script>
+			</div>
+		</div>
 		<!-- 
 		<div class="control-group">
 			<label class="control-label" for="corplicense">企业法人营业执照</label>

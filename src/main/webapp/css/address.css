@@ -1,0 +1,15 @@
+.addr{
+	text-indent:0;
+}
+.addr a:hover{
+	color:#EE7600;
+	text-decoration: none;
+}
+.addr_selected{
+	color:#FFFFFF;
+	background-color: #66CD00;
+}
+
+.addr_unselected{
+	color:#66CD00;
+}
