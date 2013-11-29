@@ -32,28 +32,28 @@ public class AddressDao {
 	public List<Address> getAddrByParentId(String parentid) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
 		String sql = "select * from hsw_buss.Address where parent_id='"
-				+ parentid + "' order by name";
+				+ parentid + "'";
 		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
 				Address.class));
 	}
 
 	public List<Address> getAddrLevel1() {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql = "select * from hsw_buss.Address where level=1 order by name";
+		String sql = "select * from hsw_buss.Address where level=1";
 		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
 				Address.class));
 	}
 
 	public List<Address> getAddrLevel0() {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql = "select * from hsw_buss.Address where level=0 order by name";
+		String sql = "select * from hsw_buss.Address where level=0";
 		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
 				Address.class));
 	}
 
 	public List<Address> getAllAddrs() {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql = "select * from hsw_buss.Address order by name";
+		String sql = "select * from hsw_buss.Address";
 		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
 				Address.class));
 	}

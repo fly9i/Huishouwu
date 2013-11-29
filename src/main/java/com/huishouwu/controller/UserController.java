@@ -192,5 +192,11 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping("/addcol")
+	@ResponseBody
+	public String addCollector(HttpServletRequest req){
+		
+		return "";
+	}
 	
 }

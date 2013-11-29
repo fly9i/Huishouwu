@@ -1,70 +1,93 @@
-var hsw_addr={
-		input:$("<input type='hidden' value='' name ='addr' id='addr'/>"),
-
-		select_id:""
+var hsw_addr = {
+	input : $("<input type='hidden' value='' name ='addr' id='addr'/>"),
+	container : null,
+	select_id : "",
 };
-$.fn.addr_select=function(){
-	var p=$(this).parent();
-	p.find(".addr_selected").removeClass("addr_selected").addClass("addr_unselected");
+$.fn.addr_select = function() {
+	var p = $(this).parent();
+	p.find(".addr_selected").removeClass("addr_selected").addClass(
+			"addr_unselected");
 	$(this).removeClass("addr_unselected").addClass("addr_selected");
-	var id=$(this).attr("id");
+	var id = $(this).attr("id");
 	hsw_addr.input.val(id);
-	hsw_addr.select_id=id;
-	var level=p.attr("level");
-	if(level<3){
-		getAddrByParentId(Number(level)+1,id);
+	hsw_addr.select_id = id;
+	var level = p.attr("level");
+	if (level == 1) {
+		$("#addr2").remove();
+		$("#addr3").remove();
+	} else if (level == 2) {
+		$("#addr3").remove();
+	}
+
+	if (level < 3) {
+		getAddrByParentId(Number(level) + 1, id);
 	}
 };
-$.fn.genAddr=function(option){
-	var container=$(this);
+$.fn.genAddr = function(option) {
+	var container = $(this);
+	hsw_addr.container = container;
 	container.append(hsw_addr.input);
+	var l = option.level || 1;
+	var str = l == 1 ? "<span>城市</span>" : "<span>商圈</span>";
 	$.ajax({
-		url:hsw_conf.path+"/addr/l/1",
-		method:"GET",
-		async:false,
-		success:function(data){
-			var p=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:1,id:"addr1"}).html("<span>城市</span>");
-			var p2=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:2,id:"addr2"}).html("<span>区域</span>");
-			var p3=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:3,id:"addr3"}).html("<span>商圈</span>");
-			for(var i in data){
-				var a=$("<a/>").attr({"id":data[i].selfId,"href":"javascript:;"}).addClass("addr_unselected").html(data[i].name);
-				a.on("click",function(){
+		url : hsw_conf.path + "/addr/l/" + l,
+		method : "GET",
+		async : false,
+		success : function(data) {
+			var p = $("<p/>").css({
+				border : 0,
+				margin : 0,
+				padding : 0
+			}).addClass("addr").attr({
+				level : 1,
+				id : "addr" + l
+			}).html(str);
+			for ( var i in data) {
+				var a = $("<a/>").attr({
+					"id" : data[i].selfId,
+					"href" : "javascript:;"
+				}).addClass("addr_unselected").html(data[i].name);
+				a.on("click", function() {
 					$(this).addr_select();
 				});
 				p.append("&nbsp;&nbsp;");
 				p.append(a);
-				
-				
+
 			}
 			container.append(p);
-			container.append($("<hr/>"));
-			container.append(p2);
-			container.append($("<hr/>"));
-			container.append(p3);
 		}
 	});
 };
 
-
-function getAddrByParentId(level,pid){
-	var str=(level==1)?"<span>区域</span>":"<span>商圈</span>";
+function getAddrByParentId(level, pid) {
+	var str = (level == 1) ? "<span>区域</span>" : "<span>商圈</span>";
 	$.ajax({
-		url:hsw_conf.path+"/addr/p/"+pid,
-		method:"GET",
-		async:true,
-		success:function(data){
-			var p=$("<p/>").css({border:0,margin:0,padding:0}).addClass("addr").attr({level:level,id:"addr"+level}).html(str);
-			for(var i in data){
-				var a=$("<a/>").attr({"id":data[i].selfId,"href":"javascript:;"}).addClass("addr_unselected").html(data[i].name);
-				a.on("click",function(){
+		url : hsw_conf.path + "/addr/p/" + pid,
+		method : "GET",
+		async : false,
+		success : function(data) {
+			var p = $("<p/>").css({
+				border : 0,
+				margin : 0,
+				padding : 0
+			}).addClass("addr").attr({
+				level : level,
+				id : "addr" + level
+			}).html(str);
+			for ( var i in data) {
+				var a = $("<a/>").attr({
+					"id" : data[i].selfId,
+					"href" : "javascript:;"
+				}).addClass("addr_unselected").html(data[i].name);
+				a.on("click", function() {
 					$(this).addr_select();
 				});
 
 				p.append("&nbsp;&nbsp;");
 				p.append(a);
-				
+
 			}
-			$("#addr"+level).replaceWith(p);
+			hsw_addr.container.append(p);
 		}
 	});
 }
