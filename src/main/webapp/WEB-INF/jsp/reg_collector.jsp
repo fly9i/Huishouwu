@@ -44,6 +44,13 @@
 				<input type="text" id="corpphone" name="corpphone" required minLength='3' maxLength='50' placeholder="联系电话">
 			</div>
 		</div>
+		
+		<div class="control-group">
+			<label class="control-label" for="email">Email</label>
+			<div class="controls">
+				<input type="text" id="email" name="email" required minLength='3' maxLength='50' placeholder="email">
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">回收区域选择</label>
 			<div class="controls" id="addr">
@@ -52,13 +59,14 @@
 			</script>
 			</div>
 		</div>
-		<!-- 
 		<div class="control-group">
 			<label class="control-label" for="corplicense">企业法人营业执照</label>
 			<div class="controls">
 				<input type="file" id="corplicense" name="corplicense" required placeholder="企业法人营业执照">
 			</div>
 		</div>
+		<!-- 
+		
 		<div class="control-group">
 			<label class="control-label" for="corpownerid1">负责人身份证（正面）</label>
 			<div class="controls">
@@ -75,7 +83,7 @@
 		<div class="control-group">
 			<label class="control-label" for="corpshow">营业状况展示</label>
 			<div class="controls">
-				<input type="file" id="corpshow" name="corpshow" placeholder="负责人身份证（背面）">
+				<input type="file" id="corpshow" name="corpshow" placeholder="营业状况展示">
 			</div>
 		</div>
 		

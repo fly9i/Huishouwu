@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.User;
@@ -191,6 +192,7 @@ public class UserController {
 			return "{code:" + code + ",message:'" + msg + "'}";
 		}
 	}
+	
 	
 	@RequestMapping("/addcol")
 	@ResponseBody

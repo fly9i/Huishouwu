@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,16 +13,16 @@
 	src="${mainpath}/js/jquery.flexslider-min.js"></script>
 
 <script type="text/javascript">
-$(function(){
-	$('.flexslider').flexslider({
-		animation: "fade",
-		startAt: 0,
-		slideshow: true,
-		slideshowSpeed: 3000,
-		pauseOnHover: false,
-		pauseOnAction: true
+	$(function() {
+		$('.flexslider').flexslider({
+			animation : "fade",
+			startAt : 0,
+			slideshow : true,
+			slideshowSpeed : 3000,
+			pauseOnHover : false,
+			pauseOnAction : true
+		});
 	});
-});
 </script>
 <script type="text/javascript" src="${mainpath }/js/news.js"></script>
 <link rel='stylesheet' href="${mainpath}/css/flexslider.css" />
@@ -33,28 +34,25 @@ $(function(){
 		style="width: 530px; height: 300px; padding-left: 0px; margin-left: 0px;">
 		<!-- Place somewhere in the <body> of your page -->
 		<ul class="slides">
-		<c:forEach var="img" items="${files }">
-			<li><img src="${mainpath}/uploads/slideshow/${img.getName()}" style="width:100%;height:300px;"/></li>
-		</c:forEach>
+			<c:forEach var="img" items="${files }">
+				<li><img src="${mainpath}/uploads/slideshow/${img.getName()}"
+					style="width: 100%; height: 300px;" /></li>
+			</c:forEach>
 		</ul>
 	</div>
-	<div style="text-align:center;">
-	
-	</div>
+	<div style="text-align: center;"></div>
 </div>
 
 <div class="span5">
-<h5>新闻</h5>
-<div>
-<ul class="news_show" style="list-style-type:none;">
+	<h5>新闻</h5>
+	<div>
+		<ul class="news_show" style="list-style-type: none;">
 
-<li id="news_title" style="margin:5px;">
-正在加载新闻...
-</li>
+			<li id="news_title" style="margin: 5px;">正在加载新闻...</li>
 
-<li class="pull-right"><a href="news">&gt;&gt;更多</a></li>
-</ul>
-</div>
+			<li class="pull-right"><a href="news">&gt;&gt;更多</a></li>
+		</ul>
+	</div>
 </div>
 
 <%@ include file="body_footer.jsp"%>

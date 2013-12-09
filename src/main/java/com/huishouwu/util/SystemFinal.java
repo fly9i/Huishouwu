@@ -13,6 +13,6 @@ public class SystemFinal {
 	public static final int USER_CLINET = 1;
 	public static final int USER_ADMIN = 2;
 	public static final int USER_LIMITED = 3;
-	public static final int USER_COLLECTOR_NONACCEPT = 4;
+	public static final int USER_COLLECTOR_NONACCEPT = 5;
 
 }
