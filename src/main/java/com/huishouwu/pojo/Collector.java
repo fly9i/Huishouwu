@@ -13,6 +13,7 @@ public class Collector {
 	private String corpLicense;
 	private String corpShow;
 	private String showSite;
+	private String collectorid;
 	private Date create_at;
 	private Date update_at;
 
@@ -94,6 +95,14 @@ public class Collector {
 
 	public void setShowSite(String showSite) {
 		this.showSite = showSite;
+	}
+
+	public String getCollectorid() {
+		return collectorid;
+	}
+
+	public void setCollectorid(String collectorid) {
+		this.collectorid = collectorid;
 	}
 
 	public Date getCreate_at() {
