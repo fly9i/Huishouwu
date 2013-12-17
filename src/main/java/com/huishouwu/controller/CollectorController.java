@@ -37,46 +37,60 @@ public class CollectorController {
 		return name;
 	}
 
+	@RequestMapping("/test")
+	@ResponseBody
+	public String apply() {
+		return "{str:'test'}";
+	}
+
 	@RequestMapping("/apply")
 	@ResponseBody
-	public String apply(@RequestParam("corpname") String corpName,
-			@RequestParam("corpsize") int corpSize,
-			@RequestParam("corpowner") String corpOwner,
-			@RequestParam("email") String email,
-			@RequestParam("corpphone") String corpPhone,
-			@RequestParam("addr") String addr,
-			@RequestParam("corplicense") CommonsMultipartFile corpLicense,
-			@RequestParam("corpshow") CommonsMultipartFile corpShow,
-			@RequestParam("showsite") String showSite, HttpServletRequest req) {
+	public String apply(
+			@RequestParam(required = false, value = "corpname") String corpName,
+			@RequestParam(required = false, value = "corpsize", defaultValue = "0") int corpSize,
+			@RequestParam(required = false, value = "corpowner") String corpOwner,
+			@RequestParam(required = false, value = "email") String email,
+			@RequestParam(required = false, value = "corpphone") String corpPhone,
+			@RequestParam(required = false, value = "addr") String addr,
+			@RequestParam(required = false, value = "corplicense") CommonsMultipartFile corpLicense,
+			@RequestParam(required = false, value = "corpshow") CommonsMultipartFile corpShow,
+			@RequestParam(required = false, value = "showsite") String showSite,
+			HttpServletRequest req) {
 		String uploadPath = req.getSession().getServletContext()
 				.getRealPath("/")
 				+ "/uploads/collector_file/";
 		boolean go = true;
+		if(corpName==null || corpPhone==null || addr==null){
+			return "{code:400,desc:'公司名称或联系方式为空'}";
+		}
 		Collector collector = new Collector();
 		collector.setAddr(addr);
+		if (corpLicense != null) {
+			String corpLisName = this.getNewFileName(corpLicense);
 
-		String corpLisName = this.getNewFileName(corpLicense);
-		File corpLisFile = new File(uploadPath + corpLisName);
-		collector.setCorpLicense(corpLisName);
-		try {
-			corpLicense.transferTo(corpLisFile);
-		} catch (IllegalStateException e1) {
-			logger.error("Failed to save file corpLicense",e1);
-		} catch (IOException e1) {
-			logger.error("Failed to save file corpLicense",e1);
+			File corpLisFile = new File(uploadPath + corpLisName);
+			collector.setCorpLicense(corpLisName);
+			try {
+				corpLicense.transferTo(corpLisFile);
+			} catch (IllegalStateException e1) {
+				logger.error("Failed to save file corpLicense", e1);
+			} catch (IOException e1) {
+				logger.error("Failed to save file corpLicense", e1);
+			}
 		}
 
-		String corpShowName = this.getNewFileName(corpShow);
-		File corpShowFile = new File(uploadPath + corpShowName);
-		try {
-			corpShow.transferTo(corpShowFile);
-			collector.setCorpLicense(corpShowName);
-		} catch (IllegalStateException e1) {
-			logger.error("Failed to save file corpShowFile",e1);
-		} catch (IOException e1) {
-			logger.error("Failed to save file corpShowFile",e1);
+		if (corpShow != null) {
+			String corpShowName = this.getNewFileName(corpShow);
+			File corpShowFile = new File(uploadPath + corpShowName);
+			try {
+				corpShow.transferTo(corpShowFile);
+				collector.setCorpLicense(corpShowName);
+			} catch (IllegalStateException e1) {
+				logger.error("Failed to save file corpShowFile", e1);
+			} catch (IOException e1) {
+				logger.error("Failed to save file corpShowFile", e1);
+			}
 		}
-
 		collector.setCorpName(corpName);
 		collector.setCorpOwner(corpOwner);
 		collector.setCorpPhone(corpPhone);
@@ -102,9 +116,9 @@ public class CollectorController {
 		}
 		if (result == 1) {
 			code = 200;
-		}else{
-			code=400;
-			msg="Failed to apply.";
+		} else {
+			code = 400;
+			msg = "Failed to apply.";
 		}
 		return "{code:" + code + ",message:'" + msg + "'}";
 
