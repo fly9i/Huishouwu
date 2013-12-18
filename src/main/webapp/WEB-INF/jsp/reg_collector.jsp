@@ -10,7 +10,7 @@
 </head>
 <body>
 <div style="width:780px;">
-<form id="form_apply" class="well form-horizontal">
+<form id="form_apply" class="well form-horizontal"  enctype="multipart/form-data">
 	<fieldset>
 		<legend>回收商申请</legend>
 		<div class="control-group">

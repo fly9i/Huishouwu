@@ -2,6 +2,8 @@ package com.huishouwu.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.huishouwu.dao.CollectorDao;
 import com.huishouwu.pojo.Collector;
+import com.huishouwu.util.Utils;
 
 @Controller
 @RequestMapping("col")
@@ -33,7 +36,7 @@ public class CollectorController {
 		String[] names = fileName.split("\\.");
 		String ext = names[names.length - 1];
 		String name = String.valueOf(System.currentTimeMillis())
-				+ RandomStringUtils.randomNumeric(4) + ext;
+				+ RandomStringUtils.randomNumeric(4) + "." + ext;
 		return name;
 	}
 
@@ -60,7 +63,7 @@ public class CollectorController {
 				.getRealPath("/")
 				+ "/uploads/collector_file/";
 		boolean go = true;
-		if(corpName==null || corpPhone==null || addr==null){
+		if (corpName == null || corpPhone == null || addr == null) {
 			return "{code:400,desc:'公司名称或联系方式为空'}";
 		}
 		Collector collector = new Collector();
@@ -120,7 +123,8 @@ public class CollectorController {
 			code = 400;
 			msg = "Failed to apply.";
 		}
-		return "{code:" + code + ",message:'" + msg + "'}";
+
+		return "<script type='text/javascript'>alert('" + msg + "');window.parent.location.reload();</script>";
 
 	}
 
