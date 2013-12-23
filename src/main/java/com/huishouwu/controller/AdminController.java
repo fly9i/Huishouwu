@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.huishouwu.buss.ConfigHandler;
+import com.huishouwu.dao.CollectorDao;
 import com.huishouwu.dao.ContentDao;
 import com.huishouwu.dao.OrderDao;
 import com.huishouwu.dao.UserDao;
+import com.huishouwu.pojo.Collector;
 import com.huishouwu.pojo.HomePicture;
 import com.huishouwu.pojo.Order;
 import com.huishouwu.pojo.TypeConfig;
@@ -49,6 +51,9 @@ public class AdminController {
 	@Resource
 	private ConfigHandler configHandler;
 
+	@Resource
+	private CollectorDao colDao;
+	
 	@RequestMapping("")
 	public String show(Model m, HttpServletRequest req) {
 		m.addAttribute("title", "管理");
@@ -266,8 +271,10 @@ public class AdminController {
 		if (u == null || u.getRole() != 2) {
 			return "{code:400,des:'请以管理员身份登录'}";
 		}
-		List<User> nonCollectors=userDao.getCollectorByType(SystemFinal.USER_COLLECTOR_NONACCEPT);
-		m.addAttribute("noncolls", nonCollectors);
+//		List<User> nonCollectors=userDao.getCollectorByType(SystemFinal.USER_COLLECTOR_NONACCEPT);
+//		m.addAttribute("noncolls", nonCollectors);
+		List<Collector> collectors=colDao.getCollectorsByStatus(SystemFinal.USER_COLLECTOR_APPLY);
+		m.addAttribute("collectors", collectors);
 		return "admin/reviewcoll";
 	}
 	

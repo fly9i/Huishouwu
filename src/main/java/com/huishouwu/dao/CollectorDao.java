@@ -1,5 +1,6 @@
 package com.huishouwu.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -9,13 +10,16 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.huishouwu.pojo.Address;
 import com.huishouwu.pojo.Collector;
 import com.huishouwu.pojo.HomePicture;
 import com.huishouwu.util.CustomerContextHolder;
+import com.huishouwu.util.SystemFinal;
 
 @Repository
 public class CollectorDao {
@@ -33,21 +37,58 @@ public class CollectorDao {
 		this.dynamicDataSource = dynamicDataSource;
 	}
 
-	public List<Address> getCollectorById(String collectorid) {
+	public Collector getCollectorById(String collectorid) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
 		String sql = "select * from hsw_user_center.collector where collectorid='"
 				+ collectorid + "'";
-		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
-				Address.class));
+		return this.jdbcTemplate.queryForObject(sql, Collector.class);
 	}
 
+	public List<Collector> getCollectorsByStatus(int status) {
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		String sql = "select * from hsw_user_center.collector where status="
+				+ status;
+		return this.jdbcTemplate.query(sql, new BeanPropertyRowMapper(
+				Collector.class));
+	}
+
+	public int ignoreCollector(final String collectorid){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "update hsw_user_center.collector set status="+SystemFinal.USER_COLLECTOR_IGNORE+" where collectorid=?";
+		return this.jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setString(1, collectorid);
+				return ps;
+			}
+		});
+	}
+
+	public int agreeCollector(final String collectorid){
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "update hsw_user_center.collector set status="+SystemFinal.USER_COLLECTOR+" where collectorid=?";
+		return this.jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps=con.prepareStatement(sql);
+				ps.setString(1, collectorid);
+				return ps;
+			}
+		});
+	}
+	
 	public int apply(final Collector collector) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql = "insert into hsw_user_center.collector " +
-				"(corpname,corpsize,corpowner,email,corpphone,addr,corplicense,corpshow,showsite,create_at,update_at,collectorid)" +
-				" values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into hsw_user_center.collector "
+				+ "(corpname,corpsize,corpowner,email,corpphone,addr,corplicense,corpshow,showsite,create_at,update_at,collectorid,status)"
+				+ " values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		return this.jdbcTemplate.update(sql, new PreparedStatementSetter() {
-			
+
 			@Override
 			public void setValues(PreparedStatement ps) throws SQLException {
 				ps.setObject(1, collector.getCorpName());
@@ -62,6 +103,7 @@ public class CollectorDao {
 				ps.setObject(10, collector.getCreate_at());
 				ps.setObject(11, collector.getUpdate_at());
 				ps.setObject(12, collector.getCollectorid());
+				ps.setObject(13, collector.getStatus());
 			}
 		});
 	}

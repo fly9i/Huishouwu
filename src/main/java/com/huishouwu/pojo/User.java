@@ -7,7 +7,7 @@ public class User {
 	private String name;
 	private String pass;
 	private String email;
-	private String sing_way;
+	private String sign_way;
 	private String mobile;
 	private int role;
 	private String address;
@@ -33,11 +33,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getSing_way() {
-		return sing_way;
+	public String getSign_way() {
+		return sign_way;
 	}
-	public void setSing_way(String sing_way) {
-		this.sing_way = sing_way;
+	public void setSign_way(String sign_way) {
+		this.sign_way = sign_way;
 	}
 	public String getMobile() {
 		return mobile;

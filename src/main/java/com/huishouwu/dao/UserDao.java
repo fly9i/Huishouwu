@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.huishouwu.pojo.User;
 import com.huishouwu.util.CustomerContextHolder;
+import com.huishouwu.util.SystemFinal;
 
 @Repository
 public class UserDao {
@@ -62,7 +63,7 @@ public class UserDao {
 
 				ps.setObject(2, user.getPass());
 				ps.setObject(3, user.getEmail());
-				ps.setObject(4, user.getSing_way());
+				ps.setObject(4, user.getSign_way());
 				ps.setObject(5, user.getMobile());
 				ps.setObject(6, user.getRole());
 				ps.setObject(7, user.getAddress());
@@ -128,7 +129,7 @@ public class UserDao {
 
 	public List<User> checkUser(final String name, final String pass) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		final String sql = "select * from users where pass=? and (name=? or email=? or mobile=?)";
+		final String sql = "select * from users where pass=? and (name=? or email=? or mobile=?) and role<>"+SystemFinal.USER_DELETED;
 		return this.jdbcTemplate.query(new PreparedStatementCreator() {
 
 			@Override

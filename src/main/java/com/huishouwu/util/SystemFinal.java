@@ -1,7 +1,7 @@
 package com.huishouwu.util;
 
 public class SystemFinal {
-
+	public static final String SALT = "sd1123dsdggzasegjhdt";
 	public static final String PASSWORD_KEY = "huishouwu.com";
 
 	public static final int ORDER_ACCEPTED = 0;
@@ -13,6 +13,6 @@ public class SystemFinal {
 	public static final int USER_CLINET = 1;
 	public static final int USER_ADMIN = 2;
 	public static final int USER_LIMITED = 3;
-	public static final int USER_COLLECTOR_NONACCEPT = 5;
-
+	public static final int USER_COLLECTOR_APPLY = 5;
+	public static final int USER_COLLECTOR_IGNORE = 6;
 }

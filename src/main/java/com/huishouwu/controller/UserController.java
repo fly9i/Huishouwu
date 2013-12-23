@@ -19,6 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.User;
+import com.huishouwu.util.SystemFinal;
 import com.huishouwu.util.Utils;
 
 @Controller
@@ -28,7 +29,7 @@ public class UserController {
 	public static final Logger logger = LoggerFactory
 			.getLogger(UserController.class);
 	Md5PasswordEncoder md5 = new Md5PasswordEncoder();
-	private String salt = "sd1123dsdggzasegjhdt";
+	
 
 	private UserDao userDao;
 
@@ -45,7 +46,7 @@ public class UserController {
 		int code = 0;
 		String msg = "";
 		try {
-			userList = userDao.checkUser(name, md5.encodePassword(pass, salt));
+			userList = userDao.checkUser(name, md5.encodePassword(pass, SystemFinal.SALT));
 		} catch (Exception e) {
 			logger.error("Error on user login.User:" + name, e);
 			code = -2;
@@ -148,11 +149,11 @@ public class UserController {
 		user.setEmail(email);
 		user.setMobile(mobile);
 
-		user.setPass(md5.encodePassword(pass, salt));
+		user.setPass(md5.encodePassword(pass, SystemFinal.SALT));
 
 		user.setAddress("");
 
-		user.setSing_way("web");
+		user.setSign_way("web");
 		user.setCreate_at(new Date());
 		user.setUpdate_at(new Date());
 		user.setUserid(Utils.md5(user.getName() + "_" + user.getEmail() + "_"

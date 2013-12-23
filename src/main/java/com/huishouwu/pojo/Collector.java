@@ -14,6 +14,7 @@ public class Collector {
 	private String corpShow;
 	private String showSite;
 	private String collectorid;
+	private int status;
 	private Date create_at;
 	private Date update_at;
 
@@ -103,6 +104,14 @@ public class Collector {
 
 	public void setCollectorid(String collectorid) {
 		this.collectorid = collectorid;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public Date getCreate_at() {

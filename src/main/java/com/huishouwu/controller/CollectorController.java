@@ -12,14 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.huishouwu.dao.CollectorDao;
+import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.Collector;
+import com.huishouwu.pojo.User;
+import com.huishouwu.util.SystemFinal;
 import com.huishouwu.util.Utils;
 
 @Controller
@@ -28,8 +33,13 @@ public class CollectorController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(CollectorController.class);
 
+	private Md5PasswordEncoder md5 = new Md5PasswordEncoder();
+
 	@Resource
 	private CollectorDao collectorDao;
+
+	@Resource
+	private UserDao userDao;
 
 	private String getNewFileName(CommonsMultipartFile file) {
 		String fileName = file.getOriginalFilename();
@@ -44,6 +54,60 @@ public class CollectorController {
 	@ResponseBody
 	public String apply() {
 		return "{str:'test'}";
+	}
+
+	@RequestMapping("/op/{id}")
+	@ResponseBody
+	public String changeStatus(@RequestParam String op,
+			@PathVariable("id") String id) {
+		boolean add = false;
+		switch (op) {
+		case "agree":
+			add = true;
+			break;
+		default:
+			add = false;
+			break;
+		}
+
+		int code = 0;
+		String des = "";
+		if (add) {
+			User u = new User();
+			Collector collector = collectorDao.getCollectorById(id);
+			u.setAddress(collector.getAddr());
+			u.setCreate_at(new Date());
+			u.setEmail(collector.getEmail());
+			u.setLast_login(new Date());
+			u.setMobile(collector.getCorpPhone());
+			u.setName(RandomStringUtils.randomNumeric(10));
+			String pass = RandomStringUtils.randomAlphabetic(8);
+			u.setPass(md5.encodePassword(pass, SystemFinal.SALT));
+			u.setRole(SystemFinal.USER_COLLECTOR);
+			u.setSign_way("apply");
+			u.setUpdate_at(new Date());
+			u.setUserid(collector.getCollectorid());
+			int res = 0;
+			try {
+				res = userDao.addUser(u);
+				collectorDao.agreeCollector(collector.getCollectorid());
+				code=200;
+				des="生成用户成功";
+			} catch (Exception e) {
+				logger.error("Failed to add user.", e);
+				res = 0;
+			}
+			if (res == 0) {
+				code = -1;
+				des = "生成用户失败";
+			}
+
+		} else {
+			collectorDao.ignoreCollector(id);
+			code=200;
+			des="成功忽略申请";
+		}
+		return "{code:"+code+",des:'"+des+"',op:'" + op + "'}";
 	}
 
 	@RequestMapping("/apply")
@@ -75,6 +139,7 @@ public class CollectorController {
 			collector.setCorpLicense(corpLisName);
 			try {
 				corpLicense.transferTo(corpLisFile);
+				collector.setCorpLicense(corpLisName);
 			} catch (IllegalStateException e1) {
 				logger.error("Failed to save file corpLicense", e1);
 			} catch (IOException e1) {
@@ -87,7 +152,7 @@ public class CollectorController {
 			File corpShowFile = new File(uploadPath + corpShowName);
 			try {
 				corpShow.transferTo(corpShowFile);
-				collector.setCorpLicense(corpShowName);
+				collector.setCorpShow(corpShowName);
 			} catch (IllegalStateException e1) {
 				logger.error("Failed to save file corpShowFile", e1);
 			} catch (IOException e1) {
@@ -102,6 +167,7 @@ public class CollectorController {
 		collector.setEmail(email);
 		collector
 				.setCollectorid("C" + RandomStringUtils.randomAlphanumeric(15));
+		collector.setStatus(SystemFinal.USER_COLLECTOR_APPLY);
 		collector.setShowSite(showSite);
 		collector.setUpdate_at(new Date());
 
@@ -124,7 +190,8 @@ public class CollectorController {
 			msg = "Failed to apply.";
 		}
 
-		return "<script type='text/javascript'>alert('" + msg + "');window.parent.location.reload();</script>";
+		return "<script type='text/javascript'>alert('" + msg
+				+ "');window.parent.location.reload();</script>";
 
 	}
 
