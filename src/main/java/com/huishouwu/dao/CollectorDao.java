@@ -39,9 +39,8 @@ public class CollectorDao {
 
 	public Collector getCollectorById(String collectorid) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		String sql = "select * from hsw_user_center.collector where collectorid='"
-				+ collectorid + "'";
-		return this.jdbcTemplate.queryForObject(sql, Collector.class);
+		String sql = "select * from hsw_user_center.collector where collectorid=?";
+		return this.jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper(Collector.class),collectorid);
 	}
 
 	public List<Collector> getCollectorsByStatus(int status) {
@@ -52,36 +51,53 @@ public class CollectorDao {
 				Collector.class));
 	}
 
-	public int ignoreCollector(final String collectorid){
+	public List<Collector> getCollectorsByEmail(final String email) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		final String sql = "update hsw_user_center.collector set status="+SystemFinal.USER_COLLECTOR_IGNORE+" where collectorid=?";
-		return this.jdbcTemplate.update(new PreparedStatementCreator() {
-			
+		final String sql = "select * from hsw_user_center.collector where email=?";
+		return this.jdbcTemplate.query(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con)
 					throws SQLException {
-				PreparedStatement ps=con.prepareStatement(sql);
+				// TODO Auto-generated method stub
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setString(1, email);
+				return ps;
+			}
+		}, new BeanPropertyRowMapper(Collector.class));
+	}
+
+	public int ignoreCollector(final String collectorid) {
+		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
+		final String sql = "update hsw_user_center.collector set status="
+				+ SystemFinal.USER_COLLECTOR_IGNORE + " where collectorid=?";
+		return this.jdbcTemplate.update(new PreparedStatementCreator() {
+
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con)
+					throws SQLException {
+				PreparedStatement ps = con.prepareStatement(sql);
 				ps.setString(1, collectorid);
 				return ps;
 			}
 		});
 	}
 
-	public int agreeCollector(final String collectorid){
+	public int agreeCollector(final String collectorid) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
-		final String sql = "update hsw_user_center.collector set status="+SystemFinal.USER_COLLECTOR+" where collectorid=?";
+		final String sql = "update hsw_user_center.collector set status="
+				+ SystemFinal.USER_COLLECTOR + " where collectorid=?";
 		return this.jdbcTemplate.update(new PreparedStatementCreator() {
-			
+
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con)
 					throws SQLException {
-				PreparedStatement ps=con.prepareStatement(sql);
+				PreparedStatement ps = con.prepareStatement(sql);
 				ps.setString(1, collectorid);
 				return ps;
 			}
 		});
 	}
-	
+
 	public int apply(final Collector collector) {
 		setDataSource(CustomerContextHolder.MYSQLDATASOURCE);
 		String sql = "insert into hsw_user_center.collector "

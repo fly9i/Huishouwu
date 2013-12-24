@@ -2,9 +2,8 @@ package com.huishouwu.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ import com.huishouwu.dao.UserDao;
 import com.huishouwu.pojo.Collector;
 import com.huishouwu.pojo.User;
 import com.huishouwu.util.SystemFinal;
-import com.huishouwu.util.Utils;
+import com.huishouwu.util.email.EmailSender;
 
 @Controller
 @RequestMapping("col")
@@ -81,7 +80,7 @@ public class CollectorController {
 			u.setLast_login(new Date());
 			u.setMobile(collector.getCorpPhone());
 			u.setName(RandomStringUtils.randomNumeric(10));
-			String pass = RandomStringUtils.randomAlphabetic(8);
+			String pass = RandomStringUtils.randomAlphanumeric(8);
 			u.setPass(md5.encodePassword(pass, SystemFinal.SALT));
 			u.setRole(SystemFinal.USER_COLLECTOR);
 			u.setSign_way("apply");
@@ -91,6 +90,8 @@ public class CollectorController {
 			try {
 				res = userDao.addUser(u);
 				collectorDao.agreeCollector(collector.getCollectorid());
+				EmailSender es=new EmailSender();
+				es.sendPass(u.getName(), pass, u.getEmail());
 				code=200;
 				des="生成用户成功";
 			} catch (Exception e) {
@@ -130,6 +131,16 @@ public class CollectorController {
 		if (corpName == null || corpPhone == null || addr == null) {
 			return "{code:400,desc:'公司名称或联系方式为空'}";
 		}
+		List<Collector> emailCols=collectorDao.getCollectorsByEmail(email.trim());
+		
+		List<User> userList=userDao.dupEmail(email.trim());
+		if(userList!=null && !userList.isEmpty()){
+			return "{code:300,desc:'该Email已被使用'}";
+		}
+		
+		if(emailCols!=null && !emailCols.isEmpty()){
+			return "{code:300,desc:'该Email已被使用'}";
+		}
 		Collector collector = new Collector();
 		collector.setAddr(addr);
 		if (corpLicense != null) {
@@ -164,7 +175,7 @@ public class CollectorController {
 		collector.setCorpPhone(corpPhone);
 		collector.setCorpSize(corpSize);
 		collector.setCreate_at(new Date());
-		collector.setEmail(email);
+		collector.setEmail(email.trim());
 		collector
 				.setCollectorid("C" + RandomStringUtils.randomAlphanumeric(15));
 		collector.setStatus(SystemFinal.USER_COLLECTOR_APPLY);
