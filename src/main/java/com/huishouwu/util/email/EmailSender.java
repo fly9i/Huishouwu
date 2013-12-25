@@ -22,7 +22,7 @@ public class EmailSender {
 		InputStreamReader isr=null;
 		
 		try {
-			isr=new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("template_col.html"));
+			isr=new InputStreamReader(this.getClass().getResourceAsStream("/template_col.html"));
 			
 			br=new BufferedReader(isr);
 			String s="";
